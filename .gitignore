@@ -1,0 +1,14 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Heavy raw source assets & temporary extractions
+wetransfer_cam-02-jpg_2025-10-03_0708/
+brochure_pages/
+*.cdr
+document (1).pdf
