@@ -1,795 +1,484 @@
 /**
- * CODENAME MAJHA GHAR — Interactive Script (Udaan UX)
- * Features: Lead Capture, Dynamic Modals, EMI Calculator, Floor Plan Switcher, Lightbox
+ * Codename Majha Ghar - Core Interactive Engine
+ * Strictly enforces Indian mobile validation, price & blueprint gating,
+ * animated counters, mobile app view, date chips, and instant WhatsApp lead routing.
+ * Strictly NO email addresses used.
  */
 
-document.addEventListener('DOMContentLoaded', () => {
-  // --- Constants & Config ---
-  const SALES_PHONE = '8422861465';
-  const SALES_EMAIL = '';
-  const WHATSAPP_BASE = `https://wa.me/91${SALES_PHONE}`;
-  // Paste Google Apps Script Web App URL after deploying integrations/google-apps-script/Code.gs
-  // Example: 'https://script.google.com/macros/s/AKfycbx.../exec'
-  const LEAD_WEBHOOK_URL = '';
-
-  // --- Sticky Header on Scroll ---
-  const header = document.querySelector('.site-header');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-  }, { passive: true });
-
-  // --- Mobile Navigation Toggle ---
-  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-  const navLinks = document.getElementById('navLinks');
-
-  if (mobileMenuBtn && navLinks) {
-    mobileMenuBtn.addEventListener('click', () => {
-      navLinks.classList.toggle('mobile-open');
-      const isOpen = navLinks.classList.contains('mobile-open');
-      mobileMenuBtn.setAttribute('aria-expanded', isOpen);
-    });
-
-    // Close on clicking link
-    navLinks.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('mobile-open');
-      });
-    });
+const PROJECT_CONFIG = {
+  name: "Codename Majha Ghar",
+  developer: "LJ Tanna Realty LLP",
+  location: "Sonarpada, Kalyan-Shil Road, Dombivli East",
+  hotlinePhone: "8422861465",
+  formattedPhone: "+91 84228 61465",
+  reraNo: "P51700078323",
+  pricing: {
+    bhk1_masked: "from ₹37 lakh*",
+    bhk1_actual: "from ₹37 lakh*",
+    bhk2_masked: "₹ 5X.XX Lakhs*",
+    bhk2_actual: "₹ 56.50 Lakhs* All-Inclusive"
   }
-
-  // --- Hero Cinema Slider (21st.dev inspired) ---
-  const heroSection = document.getElementById('hero');
-  const heroSlider = document.getElementById('heroSlider');
-  if (heroSlider && heroSection) {
-    const slides = heroSlider.querySelectorAll('.hero-slide');
-    const thumbs = heroSection.querySelectorAll('.hero-thumb');
-    const prevBtn = document.getElementById('heroSidePrevBtn');
-    const nextBtn = document.getElementById('heroSideNextBtn');
-    const progressFill = document.getElementById('heroProgressFill');
-    const slideCurrent = document.getElementById('heroSlideCurrent');
-    const slideLabel = document.getElementById('heroSlideLabel');
-    let currentIndex = 0;
-    let slideTimer = null;
-    const totalSlides = slides.length;
-    const SLIDE_MS = 5000;
-
-    const padIndex = (n) => String(n).padStart(2, '0');
-
-    const restartProgress = () => {
-      if (!progressFill) return;
-      progressFill.classList.remove('is-running');
-      // Force reflow so animation restarts cleanly
-      void progressFill.offsetWidth;
-      progressFill.classList.add('is-running');
-    };
-
-    const showSlide = (index) => {
-      currentIndex = (index + totalSlides) % totalSlides;
-      slides.forEach((slide, i) => {
-        slide.classList.toggle('active', i === currentIndex);
-      });
-      thumbs.forEach((thumb, i) => {
-        const active = i === currentIndex;
-        thumb.classList.toggle('active', active);
-        thumb.setAttribute('aria-selected', active ? 'true' : 'false');
-      });
-      if (slideCurrent) slideCurrent.textContent = padIndex(currentIndex + 1);
-      if (slideLabel) {
-        slideLabel.textContent = slides[currentIndex].getAttribute('data-label') || `Slide ${currentIndex + 1}`;
-      }
-      restartProgress();
-    };
-
-    const nextSlide = () => showSlide(currentIndex + 1);
-    const prevSlide = () => showSlide(currentIndex - 1);
-
-    const startTimer = () => {
-      stopTimer();
-      restartProgress();
-      slideTimer = setInterval(nextSlide, SLIDE_MS);
-    };
-
-    const stopTimer = () => {
-      if (slideTimer) {
-        clearInterval(slideTimer);
-        slideTimer = null;
-      }
-      if (progressFill) progressFill.classList.remove('is-running');
-    };
-
-    if (nextBtn) {
-      nextBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        nextSlide();
-        startTimer();
-      });
-    }
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        prevSlide();
-        startTimer();
-      });
-    }
-
-    thumbs.forEach((thumb) => {
-      thumb.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const slideIdx = parseInt(thumb.getAttribute('data-slide'), 10);
-        showSlide(slideIdx);
-        startTimer();
-      });
-    });
-
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    heroSection.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    heroSection.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      const diff = touchStartX - touchEndX;
-      if (Math.abs(diff) > 40) {
-        if (diff > 0) nextSlide();
-        else prevSlide();
-        startTimer();
-      }
-    }, { passive: true });
-
-    heroSection.addEventListener('mouseenter', stopTimer);
-    heroSection.addEventListener('mouseleave', startTimer);
-
-    showSlide(0);
-    startTimer();
-  }
-
-  // --- Animated Number Counter Effect ---
-  const counterElements = document.querySelectorAll('.stat-num[data-target]');
-  if (counterElements.length > 0) {
-    // Set initial 0 states
-    counterElements.forEach(el => {
-      const prefix = el.getAttribute('data-prefix') || '';
-      const suffix = el.getAttribute('data-suffix') || '';
-      el.textContent = `${prefix}0${suffix}`;
-    });
-
-    const animateCounter = (el) => {
-      const target = parseInt(el.getAttribute('data-target'), 10);
-      const prefix = el.getAttribute('data-prefix') || '';
-      const suffix = el.getAttribute('data-suffix') || '';
-      const duration = 1800;
-      const startTime = performance.now();
-
-      const updateCounter = (currentTime) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easeOut = 1 - Math.pow(1 - progress, 3);
-        const currentCount = Math.floor(easeOut * target);
-
-        el.textContent = `${prefix}${currentCount}${suffix}`;
-
-        if (progress < 1) {
-          requestAnimationFrame(updateCounter);
-        } else {
-          el.textContent = `${prefix}${target}${suffix}`;
-          el.classList.add('counted');
-        }
-      };
-
-      requestAnimationFrame(updateCounter);
-    };
-
-    let hasAnimated = false;
-    const statsSection = document.querySelector('.stats-banner');
-
-    if ('IntersectionObserver' in window && statsSection) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && !hasAnimated) {
-            hasAnimated = true;
-            counterElements.forEach(el => animateCounter(el));
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: 0.2
-      });
-
-      observer.observe(statsSection);
-    } else {
-      counterElements.forEach(el => animateCounter(el));
-    }
-  }
-
-  // --- Active Nav Link on Scroll ---
-  const sections = document.querySelectorAll('section[id]');
-  window.addEventListener('scroll', () => {
-    const scrollY = window.pageYOffset;
-    sections.forEach(current => {
-      const sectionHeight = current.offsetHeight;
-      const sectionTop = current.offsetTop - 120;
-      const sectionId = current.getAttribute('id');
-      const targetNav = document.querySelector(`.nav-links a[href*="${sectionId}"]`);
-      if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-        targetNav?.classList.add('active');
-      } else {
-        targetNav?.classList.remove('active');
-      }
-    });
-  }, { passive: true });
-
-  // --- Floor Plan Tabs ---
-  const planTabs = document.querySelectorAll('.plan-tab-btn');
-  const planContents = document.querySelectorAll('.plan-tab-content');
-
-  planTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      planTabs.forEach(t => t.classList.remove('active'));
-      planContents.forEach(c => c.classList.remove('active'));
-
-      tab.classList.add('active');
-      const target = tab.getAttribute('data-target');
-      document.getElementById(target)?.classList.add('active');
-    });
-  });
-
-  // --- EMI Calculator ---
-  const loanAmountInput = document.getElementById('loanAmount');
-  const loanTenureInput = document.getElementById('loanTenure');
-  const loanRateInput = document.getElementById('loanRate');
-
-  const loanAmountVal = document.getElementById('loanAmountVal');
-  const loanTenureVal = document.getElementById('loanTenureVal');
-  const loanRateVal = document.getElementById('loanRateVal');
-
-  const emiDisplay = document.getElementById('calculatedEmi');
-  const totalInterestDisplay = document.getElementById('calculatedInterest');
-  const totalPayableDisplay = document.getElementById('calculatedTotal');
-
-  function formatINR(val) {
-    return new Intl.NumberFormat('en-IN', {
-      maximumFractionDigits: 0
-    }).format(Math.round(val));
-  }
-
-  function calculateEMI() {
-    if (!loanAmountInput || !loanTenureInput || !loanRateInput) return;
-
-    const principal = parseFloat(loanAmountInput.value);
-    const years = parseFloat(loanTenureInput.value);
-    const rate = parseFloat(loanRateInput.value);
-
-    // Displays
-    loanAmountVal.textContent = `₹ ${(principal / 100000).toFixed(1)} Lakhs`;
-    loanTenureVal.textContent = `${years} Years`;
-    loanRateVal.textContent = `${rate.toFixed(2)}%`;
-
-    const monthlyRate = (rate / 12) / 100;
-    const months = years * 12;
-
-    const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
-    const totalPayment = emi * months;
-    const totalInterest = totalPayment - principal;
-
-    if (emiDisplay) emiDisplay.textContent = `₹ ${formatINR(emi)}`;
-    if (totalInterestDisplay) totalInterestDisplay.textContent = `₹ ${formatINR(totalInterest)}`;
-    if (totalPayableDisplay) totalPayableDisplay.textContent = `₹ ${formatINR(totalPayment)}`;
-  }
-
-  if (loanAmountInput && loanTenureInput && loanRateInput) {
-    loanAmountInput.addEventListener('input', calculateEMI);
-    loanTenureInput.addEventListener('input', calculateEMI);
-    loanRateInput.addEventListener('input', calculateEMI);
-    calculateEMI();
-  }
-
-  // --- Universal Lead Capture Modal ---
-  const leadModal = document.getElementById('leadModal');
-  const modalCloseBtn = document.getElementById('modalCloseBtn');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalSubtitle = document.getElementById('modalSubtitle');
-  const modalFormType = document.getElementById('modalFormType');
-  const modalSubmitBtn = document.getElementById('modalSubmitBtn');
-
-  function openLeadModal(title, subtitle, formType, btnText) {
-    if (!leadModal) return;
-    if (modalTitle) modalTitle.textContent = title || 'Enquire Now';
-    if (modalSubtitle) modalSubtitle.textContent = subtitle || 'Get complete pricing, floor plans & project brochure instantly.';
-    if (modalFormType) modalFormType.value = formType || 'General Enquiry';
-    if (modalSubmitBtn) modalSubmitBtn.textContent = btnText || 'Submit & Unlock Details';
-    leadModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeLeadModal() {
-    if (!leadModal) return;
-    leadModal.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  if (modalCloseBtn) {
-    modalCloseBtn.addEventListener('click', closeLeadModal);
-  }
-
-  if (leadModal) {
-    leadModal.addEventListener('click', (e) => {
-      if (e.target === leadModal) closeLeadModal();
-    });
-  }
-
-  // Trigger buttons with custom context
-  document.querySelectorAll('[data-action="open-modal"]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const title = btn.getAttribute('data-title') || 'Download Project Brochure';
-      const sub = btn.getAttribute('data-sub') || 'Enter your details to receive instant PDF brochure & floor plans.';
-      const type = btn.getAttribute('data-type') || 'Brochure Download';
-      const submitText = btn.getAttribute('data-btn') || 'Download Now';
-      openLeadModal(title, sub, type, submitText);
-    });
-  });
-
-  // --- Gallery expand + filter (21st.dev style) ---
-  const galleryExpand = document.getElementById('galleryExpand');
-  const galleryCards = galleryExpand
-    ? Array.from(galleryExpand.querySelectorAll('.gallery-card'))
-    : [];
-  const galleryFilterBtns = document.querySelectorAll('.gallery-filter-btn');
-
-  function setActiveGalleryCard(card) {
-    galleryCards.forEach(item => item.classList.remove('is-active'));
-    if (card && !card.classList.contains('is-hidden')) {
-      card.classList.add('is-active');
-    }
-  }
-
-  if (galleryExpand && galleryCards.length) {
-    galleryCards.forEach(card => {
-      card.addEventListener('mouseenter', () => setActiveGalleryCard(card));
-      card.addEventListener('focus', () => setActiveGalleryCard(card));
-      card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          card.click();
-        }
-      });
-    });
-
-    galleryExpand.addEventListener('mouseleave', () => {
-      const visible = galleryCards.find(card => !card.classList.contains('is-hidden'));
-      setActiveGalleryCard(visible || galleryCards[0]);
-    });
-  }
-
-  if (galleryFilterBtns.length && galleryCards.length) {
-    galleryFilterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const filter = btn.getAttribute('data-filter') || 'all';
-
-        galleryFilterBtns.forEach(item => {
-          item.classList.remove('active');
-          item.setAttribute('aria-selected', 'false');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-selected', 'true');
-
-        galleryCards.forEach(card => {
-          const category = card.getAttribute('data-category');
-          const show = filter === 'all' || category === filter;
-          card.classList.toggle('is-hidden', !show);
-        });
-
-        const firstVisible = galleryCards.find(card => !card.classList.contains('is-hidden'));
-        setActiveGalleryCard(firstVisible);
-      });
-    });
-  }
-
-  // --- Lightbox for Floor Plans & Images ---
-  const lightboxModal = document.getElementById('lightboxModal');
-  const lightboxImg = document.getElementById('lightboxImg');
-  const lightboxCaption = document.getElementById('lightboxCaption');
-  const lightboxClose = document.getElementById('lightboxClose');
-
-  function openLightbox(src, alt) {
-    if (!lightboxModal || !lightboxImg) return;
-    lightboxImg.src = src;
-    const captionText = alt || 'Codename Majha Ghar Architecture View';
-    lightboxImg.alt = captionText;
-    if (lightboxCaption) {
-      lightboxCaption.textContent = captionText;
-    }
-    lightboxModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeLightbox() {
-    if (!lightboxModal) return;
-    lightboxModal.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
-  if (lightboxModal) {
-    lightboxModal.addEventListener('click', (e) => {
-      if (e.target === lightboxModal) closeLightbox();
-    });
-  }
-
-  document.querySelectorAll('[data-action="lightbox"]').forEach(el => {
-    el.addEventListener('click', (e) => {
-      if (el.classList.contains('is-locked') || el.closest('.is-locked')) {
-        e.preventDefault();
-        e.stopPropagation();
-        return;
-      }
-      const src = el.getAttribute('data-src') || el.getAttribute('src');
-      const alt = el.getAttribute('data-alt') || el.getAttribute('alt');
-      openLightbox(src, alt);
-    });
-  });
-
-  // --- Floor plan lock / unlock after lead form submit ---
-  const FLOOR_PLAN_UNLOCK_KEY = 'codename_udaan_floor_plans_unlocked';
-
-  function areFloorPlansUnlocked() {
-    try {
-      return localStorage.getItem(FLOOR_PLAN_UNLOCK_KEY) === '1';
-    } catch (err) {
-      return false;
-    }
-  }
-
-  function unlockFloorPlans(showMessage = false) {
-    try {
-      localStorage.setItem(FLOOR_PLAN_UNLOCK_KEY, '1');
-    } catch (err) {
-      console.warn('Could not persist floor plan unlock:', err);
-    }
-
-    document.querySelectorAll('[data-plan-lock]').forEach((wrap) => {
-      wrap.classList.remove('is-locked');
-      wrap.classList.add('is-unlocked');
-      wrap.style.cursor = 'zoom-in';
-      const overlay = wrap.querySelector('.plan-lock-overlay');
-      if (overlay) overlay.setAttribute('aria-hidden', 'true');
-    });
-
-    if (showMessage) {
-      showToast('Floor plans unlocked. You can now view the high-res layouts.');
-    }
-  }
-
-  function applyFloorPlanLockState() {
-    if (areFloorPlansUnlocked()) {
-      unlockFloorPlans(false);
-    }
-  }
-
-  applyFloorPlanLockState();
-
-  // Escape key closes any modal
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeLeadModal();
-      closeLightbox();
-    }
-  });
-
-  // --- Toast Notification ---
-  const toast = document.getElementById('toastMsg');
-  function showToast(message) {
-    if (!toast) return;
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => {
-      toast.classList.remove('show');
-    }, 4500);
-  }
-
-  // --- Lead Form Submissions & Storage ---
-  function saveLead(leadData) {
-    try {
-      const existing = JSON.parse(localStorage.getItem('codename_udaan_leads') || '[]');
-      existing.push(leadData);
-      localStorage.setItem('codename_udaan_leads', JSON.stringify(existing));
-    } catch (err) {
-      console.warn('LocalStorage error:', err);
-    }
-  }
-
-  const INDIAN_MOBILE_REGEX = /^[6-9]\d{9}$/;
-  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-
-  function setFieldError(input, message) {
-    if (!input) return;
-    const wrap = input.closest('.phone-input-wrap');
-    const group = input.closest('.form-group') || input.parentElement;
-    let errorEl = input.getAttribute('aria-describedby')
-      ? document.getElementById(input.getAttribute('aria-describedby'))
-      : group?.querySelector('.form-error');
-
-    if (!errorEl && group) {
-      errorEl = document.createElement('span');
-      errorEl.className = 'form-error';
-      errorEl.setAttribute('role', 'alert');
-      group.appendChild(errorEl);
-    }
-
-    input.classList.toggle('is-invalid', Boolean(message));
-    input.classList.toggle('is-valid', !message && Boolean(input.value.trim()));
-    if (wrap) {
-      wrap.classList.toggle('is-invalid', Boolean(message));
-      wrap.classList.toggle('is-valid', !message && Boolean(input.value.trim()));
-    }
-    if (errorEl) errorEl.textContent = message || '';
-  }
-
-  function clearFormErrors(form) {
-    form.querySelectorAll('.form-error').forEach((el) => { el.textContent = ''; });
-    form.querySelectorAll('.is-invalid, .is-valid').forEach((el) => {
-      el.classList.remove('is-invalid', 'is-valid');
-    });
-  }
-
-  function normalizeIndianMobile(raw) {
-    if (!raw) return '';
-    let digits = String(raw).replace(/\D/g, '');
-    if (digits.startsWith('91') && digits.length > 10) {
-      digits = digits.slice(-10);
-    }
-    if (digits.length > 10) {
-      digits = digits.slice(-10);
-    }
-    return digits;
-  }
-
-  function validateIndianMobile(raw) {
-    const cleanPhone = normalizeIndianMobile(raw);
-    if (!cleanPhone) {
-      return { valid: false, value: '', message: 'Please enter your 10-digit mobile number.' };
-    }
-    if (cleanPhone.length !== 10) {
-      return { valid: false, value: cleanPhone, message: 'Mobile number must be exactly 10 digits.' };
-    }
-    if (!INDIAN_MOBILE_REGEX.test(cleanPhone)) {
-      return { valid: false, value: cleanPhone, message: 'Enter a valid Indian mobile number starting with 6–9.' };
-    }
-    return { valid: true, value: cleanPhone, message: '' };
-  }
-
-  function validateEmail(raw, { required = true } = {}) {
-    const email = (raw || '').trim();
-    if (!email) {
-      return {
-        valid: !required,
-        value: '',
-        message: required ? 'Please enter your email address.' : ''
-      };
-    }
-    if (!EMAIL_REGEX.test(email)) {
-      return { valid: false, value: email, message: 'Please enter a valid email address (e.g. name@gmail.com).' };
-    }
-    return { valid: true, value: email, message: '' };
-  }
-
-  // Digits-only phone inputs across all forms
-  document.querySelectorAll('input[name="phone"]').forEach((input) => {
-    input.addEventListener('input', () => {
-      const cleaned = normalizeIndianMobile(input.value).slice(0, 10);
-      if (input.value !== cleaned) input.value = cleaned;
-      if (cleaned.length === 10) {
-        const result = validateIndianMobile(cleaned);
-        setFieldError(input, result.valid ? '' : result.message);
-      } else if (cleaned.length > 0) {
-        setFieldError(input, '');
-        input.classList.remove('is-valid');
-        input.closest('.phone-input-wrap')?.classList.remove('is-valid');
-      } else {
-        setFieldError(input, '');
-      }
-    });
-
-    input.addEventListener('blur', () => {
-      if (!input.value.trim()) return;
-      const result = validateIndianMobile(input.value);
-      setFieldError(input, result.valid ? '' : result.message);
-    });
-  });
-
-  document.querySelectorAll('input[name="email"]').forEach((input) => {
-    input.addEventListener('blur', () => {
-      const required = input.hasAttribute('required');
-      if (!input.value.trim() && !required) {
-        setFieldError(input, '');
-        return;
-      }
-      const result = validateEmail(input.value, { required });
-      setFieldError(input, result.valid ? '' : result.message);
-    });
-
-    input.addEventListener('input', () => {
-      if (input.classList.contains('is-invalid')) {
-        const result = validateEmail(input.value, { required: input.hasAttribute('required') });
-        if (result.valid) setFieldError(input, '');
-      }
-    });
-  });
-
-  async function submitLeadToBackend(leadRecord) {
-    if (!LEAD_WEBHOOK_URL) {
-      throw new Error('Lead webhook is not configured. Add LEAD_WEBHOOK_URL in js/app.js.');
-    }
-
-    const payload = {
-      ...leadRecord,
-      source: window.location.href,
-      page: window.location.pathname || '/',
-      userAgent: navigator.userAgent
-    };
-    const body = JSON.stringify(payload);
-
-    // Google Apps Script web apps often hang on CORS redirect responses even after
-    // successfully writing the Sheet row. Use no-cors + timeout so the UI never sticks
-    // on "Sending..." (leads still arrive — confirmed in the Leads sheet).
-    const controller = new AbortController();
-    const timeoutMs = 8000;
-    const timer = setTimeout(() => controller.abort(), timeoutMs);
-
-    try {
-      await fetch(LEAD_WEBHOOK_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body,
-        signal: controller.signal
-      });
-      return true;
-    } catch (err) {
-      // Abort after timeout still usually means the request was already sent
-      if (err && err.name === 'AbortError') {
-        return true;
-      }
-      throw err;
-    } finally {
-      clearTimeout(timer);
-    }
-  }
-
-  async function handleLeadSubmission(e, formType) {
-    e.preventDefault();
-    const form = e.target;
-    clearFormErrors(form);
-
-    const nameInput = form.querySelector('[name="name"]');
-    const phoneInput = form.querySelector('[name="phone"]');
-    const emailInput = form.querySelector('[name="email"]');
-    const name = nameInput?.value.trim() || '';
-    const config = form.querySelector('[name="configuration"]')?.value || '1 or 2 BHK';
-    const visitDate = form.querySelector('[name="visit_date"]')?.value || '';
-    const visitTime = form.querySelector('[name="visit_time"]')?.value || '';
-    const submitBtn = form.querySelector('[type="submit"]');
-
-    let hasError = false;
-    let firstInvalid = null;
-
-    if (!name) {
-      setFieldError(nameInput, 'Please enter your full name.');
-      hasError = true;
-      firstInvalid = firstInvalid || nameInput;
-    } else {
-      setFieldError(nameInput, '');
-    }
-
-    const phoneResult = validateIndianMobile(phoneInput?.value);
-    if (!phoneResult.valid) {
-      setFieldError(phoneInput, phoneResult.message);
-      hasError = true;
-      firstInvalid = firstInvalid || phoneInput;
-    } else {
-      setFieldError(phoneInput, '');
-    }
-
-    const emailRequired = Boolean(emailInput?.hasAttribute('required'));
-    const emailResult = emailInput
-      ? validateEmail(emailInput.value, { required: emailRequired })
-      : { valid: true, value: SALES_EMAIL, message: '' };
-
-    if (emailInput && !emailResult.valid) {
-      setFieldError(emailInput, emailResult.message);
-      hasError = true;
-      firstInvalid = firstInvalid || emailInput;
-    } else if (emailInput) {
-      setFieldError(emailInput, '');
-    }
-
-    if (hasError) {
-      firstInvalid?.focus();
-      return;
-    }
-
-    const cleanPhone = phoneResult.value;
-    const email = emailResult.value || SALES_EMAIL;
-
-    const leadRecord = {
-      name,
-      phone: cleanPhone,
-      phoneE164: `+91${cleanPhone}`,
-      email,
-      config,
-      formType: formType || 'Website Lead',
-      visitDate,
-      visitTime,
-      timestamp: new Date().toISOString()
-    };
-
-    const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.setAttribute('aria-busy', 'true');
-      submitBtn.innerHTML = '<span>Sending...</span>';
-    }
-
-    let delivered = false;
-    try {
-      await submitLeadToBackend(leadRecord);
-      delivered = true;
-    } catch (err) {
-      console.error('Lead delivery failed:', err);
-      delivered = false;
-    } finally {
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.removeAttribute('aria-busy');
-        submitBtn.innerHTML = originalBtnHtml;
-      }
-    }
-
-    saveLead(leadRecord);
-    closeLeadModal();
-    form.reset();
-    clearFormErrors(form);
-    unlockFloorPlans(false);
-
-    if (delivered) {
-      showToast(`Thank you, ${name}! Details sent to our sales desk. Floor plans unlocked.`);
-    } else {
-      showToast(`Thank you, ${name}! Floor plans unlocked. Please continue on WhatsApp so our advisor gets your details.`);
-    }
-
-    const waText = encodeURIComponent(
-      `Hello! I just submitted an inquiry for Codename Majha Ghar (Dombivli East).\nName: ${name}\nPhone: +91 ${cleanPhone}\nEmail: ${email || 'Not provided'}\nInterested In: ${config}\nPurpose: ${formType}`
-    );
-    const waUrl = `${WHATSAPP_BASE}?text=${waText}`;
-
-    setTimeout(() => {
-      const confirmWa = confirm(
-        delivered
-          ? 'Would you like to also connect on WhatsApp for instant pricing & brochure?'
-          : 'Lead email/sheet sync is pending. Connect on WhatsApp now so our sales desk receives your enquiry instantly?'
-      );
-      if (confirmWa) {
-        window.open(waUrl, '_blank');
-      }
-    }, 800);
-  }
-
-  // Attach submit handlers
-  const modalForm = document.getElementById('modalLeadForm');
-  if (modalForm) {
-    modalForm.addEventListener('submit', (e) => handleLeadSubmission(e, modalFormType?.value || 'Modal Lead Form'));
-  }
-
-  const visitForm = document.getElementById('visitLeadForm');
-  if (visitForm) {
-    visitForm.addEventListener('submit', (e) => handleLeadSubmission(e, 'VIP Site Visit Booking'));
-  }
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  initGatingState();
+  initPhoneSanitization();
+  initDateChips();
+  initAnimatedCounters();
+  initMobilePillsScrollspy();
+  initModals();
+  initFormSubmissions();
+  initFloorPlanTabs();
 });
+
+/* ========================================================
+   1. PRICE & BLUEPRINT GATING SYSTEM
+   ======================================================== */
+function initGatingState() {
+  const isUnlocked = localStorage.getItem("majha_ghar_unlocked") === "true";
+  if (isUnlocked) {
+    applyUnlockedState();
+  }
+}
+
+function unlockProjectContent() {
+  localStorage.setItem("majha_ghar_unlocked", "true");
+  applyUnlockedState();
+}
+
+function applyUnlockedState() {
+  document.body.classList.add("content-unlocked");
+
+  // Reveal 1 BHK price
+  document.querySelectorAll("[data-price-target='1bhk']").forEach((el) => {
+    el.innerHTML = `<span class="text-emerald-400 font-bold">${PROJECT_CONFIG.pricing.bhk1_actual}</span>`;
+  });
+
+  // Reveal 2 BHK price
+  document.querySelectorAll("[data-price-target='2bhk']").forEach((el) => {
+    el.innerHTML = `<span class="text-emerald-400 font-bold">${PROJECT_CONFIG.pricing.bhk2_actual}</span>`;
+  });
+
+  // Update lock badges
+  document.querySelectorAll(".gating-badge").forEach((el) => {
+    el.innerHTML = `
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+        Price & Plans Unlocked
+      </span>
+    `;
+  });
+
+  // Un-blur floor plans
+  document.querySelectorAll(".gated-plan-img").forEach((img) => {
+    img.classList.remove("is-locked");
+  });
+
+  // Hide lock overlays
+  document.querySelectorAll(".plan-lock-overlay").forEach((overlay) => {
+    overlay.style.display = "none";
+  });
+}
+
+/* ========================================================
+   2. STRICT 10-DIGIT INDIAN PHONE SANITIZATION & VALIDATION
+   ======================================================== */
+function sanitizePhoneNumber(rawVal) {
+  let cleaned = rawVal.replace(/\D/g, "");
+  // Strip leading 0
+  if (cleaned.startsWith("0")) {
+    cleaned = cleaned.substring(1);
+  }
+  // Strip leading +91 / 91 if length is 12
+  if (cleaned.length === 12 && cleaned.startsWith("91")) {
+    cleaned = cleaned.substring(2);
+  }
+  // Limit to 10 digits
+  if (cleaned.length > 10) {
+    cleaned = cleaned.slice(-10);
+  }
+  return cleaned;
+}
+
+function isValidIndianMobile(number) {
+  return /^[6-9]\d{9}$/.test(number);
+}
+
+function initPhoneSanitization() {
+  document.querySelectorAll(".phone-input").forEach((input) => {
+    input.addEventListener("input", (e) => {
+      const sanitized = sanitizePhoneNumber(e.target.value);
+      e.target.value = sanitized;
+      const errorEl = input.closest(".phone-field-wrapper")?.querySelector(".phone-error-msg");
+      if (errorEl) {
+        if (sanitized.length > 0 && !/^[6-9]/.test(sanitized)) {
+          errorEl.textContent = "Number must start with 6, 7, 8, or 9";
+          errorEl.classList.add("visible");
+        } else if (sanitized.length === 10) {
+          errorEl.classList.remove("visible");
+        } else {
+          errorEl.classList.remove("visible");
+        }
+      }
+    });
+
+    input.addEventListener("blur", (e) => {
+      const sanitized = sanitizePhoneNumber(e.target.value);
+      const errorEl = input.closest(".phone-field-wrapper")?.querySelector(".phone-error-msg");
+      if (errorEl) {
+        if (sanitized.length > 0 && !isValidIndianMobile(sanitized)) {
+          errorEl.textContent = "Please enter a valid 10-digit mobile number";
+          errorEl.classList.add("visible");
+        } else {
+          errorEl.classList.remove("visible");
+        }
+      }
+    });
+  });
+}
+
+/* ========================================================
+   3. ANIMATED STAT COUNTER EFFECT (easeOutExpo)
+   ======================================================== */
+function initAnimatedCounters() {
+  const counterEls = document.querySelectorAll(".stat-counter");
+  if (!counterEls.length) return;
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && !entry.target.classList.contains("has-animated")) {
+        entry.target.classList.add("has-animated");
+        obs.unobserve(entry.target);
+        runCounter(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  counterEls.forEach((el) => observer.observe(el));
+}
+
+function runCounter(el) {
+  const target = parseFloat(el.getAttribute("data-counter") || 0);
+  const decimals = parseInt(el.getAttribute("data-decimals") || 0, 10);
+  const suffix = el.getAttribute("data-suffix") || "";
+  const prefix = el.getAttribute("data-prefix") || "";
+  const duration = 1800; // 1.8 seconds
+  const startTime = performance.now();
+
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    // easeOutExpo
+    const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+    const currentVal = ease * target;
+
+    el.textContent = `${prefix}${currentVal.toLocaleString("en-IN", {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    })}${suffix}`;
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      el.textContent = `${prefix}${target.toLocaleString("en-IN", {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals
+      })}${suffix}`;
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
+/* ========================================================
+   4. INTERACTIVE SITE VISIT DATE PICKER & CHIPS
+   ======================================================== */
+function formatDateToYYYYMMDD(d) {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function initDateChips() {
+  // Set minimum date to today for all date inputs
+  const todayStr = formatDateToYYYYMMDD(new Date());
+  document.querySelectorAll("input[type='date']").forEach((inp) => {
+    inp.min = todayStr;
+    if (!inp.value) inp.value = todayStr;
+  });
+
+  document.querySelectorAll(".date-chips-container").forEach((container) => {
+    const targetInputId = container.getAttribute("data-target-input");
+    const targetInput = document.getElementById(targetInputId);
+
+    container.querySelectorAll(".date-chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        container.querySelectorAll(".date-chip").forEach((c) => c.classList.remove("is-selected"));
+        chip.classList.add("is-selected");
+
+        const offsetType = chip.getAttribute("data-date-offset");
+        const now = new Date();
+        let targetDate = new Date();
+
+        if (offsetType === "today") {
+          targetDate = now;
+        } else if (offsetType === "tomorrow") {
+          targetDate.setDate(now.getDate() + 1);
+        } else if (offsetType === "saturday") {
+          const day = now.getDay();
+          const diff = (6 - day + 7) % 7 || 7;
+          targetDate.setDate(now.getDate() + diff);
+        } else if (offsetType === "sunday") {
+          const day = now.getDay();
+          const diff = (0 - day + 7) % 7 || 7;
+          targetDate.setDate(now.getDate() + diff);
+        }
+
+        if (targetInput) {
+          targetInput.value = formatDateToYYYYMMDD(targetDate);
+        }
+      });
+    });
+  });
+}
+
+/* ========================================================
+   5. MOBILE PILLS BAR SCROLLSPY
+   ======================================================== */
+function initMobilePillsScrollspy() {
+  const pills = document.querySelectorAll(".app-pill");
+  const sections = [];
+
+  pills.forEach((pill) => {
+    const hash = pill.getAttribute("href");
+    if (hash && hash.startsWith("#")) {
+      const el = document.querySelector(hash);
+      if (el) sections.push({ pill, section: el });
+    }
+  });
+
+  window.addEventListener("scroll", () => {
+    const scrollPos = window.scrollY + 120;
+    sections.forEach(({ pill, section }) => {
+      const top = section.offsetTop;
+      const height = section.offsetHeight;
+      if (scrollPos >= top && scrollPos < top + height) {
+        pills.forEach((p) => p.classList.remove("active"));
+        pill.classList.add("active");
+      }
+    });
+  }, { passive: true });
+}
+
+/* ========================================================
+   6. MODAL & BOTTOM SHEET ENGINE
+   ======================================================== */
+function initModals() {
+  // Triggers
+  document.querySelectorAll("[data-open-modal]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const modalId = btn.getAttribute("data-open-modal");
+      const title = btn.getAttribute("data-modal-title");
+      const config = btn.getAttribute("data-modal-config");
+      openModal(modalId, title, config);
+    });
+  });
+
+  // Close triggers
+  document.querySelectorAll("[data-close-modal]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      closeAllModals();
+    });
+  });
+
+  // Backdrop click close
+  document.querySelectorAll(".modal-backdrop").forEach((backdrop) => {
+    backdrop.addEventListener("click", (e) => {
+      if (e.target === backdrop) closeAllModals();
+    });
+  });
+
+  // ESC key close
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeAllModals();
+  });
+}
+
+function openModal(modalId, title, config) {
+  const modal = document.getElementById(modalId);
+  if (!modal) return;
+
+  if (title) {
+    const titleEl = modal.querySelector(".modal-title-text");
+    if (titleEl) titleEl.textContent = title;
+  }
+  if (config) {
+    const configInput = modal.querySelector("input[name='configuration']");
+    if (configInput) configInput.value = config;
+  }
+
+  modal.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+
+  // Mobile bottom sheet animation
+  const sheet = modal.querySelector(".app-modal-sheet");
+  if (sheet) {
+    requestAnimationFrame(() => {
+      sheet.classList.add("sheet-open");
+    });
+  }
+}
+
+function closeAllModals() {
+  document.querySelectorAll(".modal-container").forEach((m) => {
+    const sheet = m.querySelector(".app-modal-sheet");
+    if (sheet) sheet.classList.remove("sheet-open");
+    m.classList.add("hidden");
+  });
+  document.body.style.overflow = "";
+}
+
+/* ========================================================
+   7. FLOOR PLAN TABS
+   ======================================================== */
+function initFloorPlanTabs() {
+  const tabs = document.querySelectorAll(".plan-tab-btn");
+  const panes = document.querySelectorAll(".plan-pane");
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((t) => {
+        t.classList.remove("active", "bg-amber-500", "text-slate-900", "border-amber-500");
+        t.classList.add("bg-slate-800/60", "text-slate-300", "border-slate-700");
+      });
+      tab.classList.remove("bg-slate-800/60", "text-slate-300", "border-slate-700");
+      tab.classList.add("active", "bg-amber-500", "text-slate-900", "border-amber-500");
+
+      const targetPaneId = tab.getAttribute("data-tab-target");
+      panes.forEach((pane) => {
+        if (pane.id === targetPaneId) {
+          pane.classList.remove("hidden");
+        } else {
+          pane.classList.add("hidden");
+        }
+      });
+    });
+  });
+}
+
+/* ========================================================
+   8. LEAD CAPTURE & WHATSAPP ROUTING (STRICTLY NO EMAIL)
+   ======================================================== */
+function initFormSubmissions() {
+  document.querySelectorAll("form.lead-capture-form").forEach((form) => {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const nameInput = form.querySelector("input[name='fullName']");
+      const phoneInput = form.querySelector(".phone-input");
+      const configInput = form.querySelector("select[name='configuration']") || form.querySelector("input[name='configuration']");
+      const dateInput = form.querySelector("input[name='visitDate']");
+      const cabInput = form.querySelector("input[name='needCab']:checked");
+      const formSource = form.getAttribute("data-source") || "Website Enquiry";
+
+      const name = nameInput ? nameInput.value.trim() : "Valued Customer";
+      const rawPhone = phoneInput ? phoneInput.value.trim() : "";
+      const phone = sanitizePhoneNumber(rawPhone);
+
+      const errorEl = form.querySelector(".phone-error-msg");
+      if (!isValidIndianMobile(phone)) {
+        if (errorEl) {
+          errorEl.textContent = "Please enter a valid 10-digit mobile number";
+          errorEl.classList.add("visible");
+        }
+        if (phoneInput) phoneInput.focus();
+        return;
+      }
+      if (errorEl) errorEl.classList.remove("visible");
+
+      const config = configInput ? configInput.value : "1 BHK / 2 BHK";
+      const visitDate = dateInput && dateInput.value ? dateInput.value : null;
+      const needCab = cabInput ? (cabInput.value === "yes" ? "Yes (Free AC Cab Requested)" : "No") : null;
+      const timestamp = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+
+      // Save Lead Dossier to localStorage (strictly no email)
+      const leadDossier = {
+        name,
+        phone,
+        configuration: config,
+        visitDate: visitDate || "Brochure request",
+        needCab: needCab || "N/A",
+        source: formSource,
+        timestamp,
+        project: PROJECT_CONFIG.name,
+        destinationPhone: PROJECT_CONFIG.hotlinePhone
+      };
+
+      try {
+        const existingLeads = JSON.parse(localStorage.getItem("majha_ghar_leads") || "[]");
+        existingLeads.push(leadDossier);
+        localStorage.setItem("majha_ghar_leads", JSON.stringify(existingLeads));
+      } catch (err) {
+        console.warn("Storage error", err);
+      }
+
+      // Unlock content on site
+      unlockProjectContent();
+
+      // Close open lead modals
+      closeAllModals();
+
+      // Build WhatsApp message (brochure-first; visit fields only when present)
+      let waMessage =
+`*New Enquiry - ${PROJECT_CONFIG.name}*
+👤 Name: ${name}
+📞 Mobile: +91 ${phone}
+🏠 Configuration: ${config}
+📍 Source: ${formSource}
+⏰ Time: ${timestamp} IST`;
+
+      if (visitDate) {
+        waMessage += `\n📅 Preferred Visit Date: ${visitDate}`;
+      }
+      if (needCab) {
+        waMessage += `\n🚗 Free Cab Facility: ${needCab}`;
+      }
+
+      waMessage += `\n\nPlease send me the project brochure and near-possession pricing details.`;
+
+      const waUrl = `https://wa.me/91${PROJECT_CONFIG.hotlinePhone}?text=${encodeURIComponent(waMessage)}`;
+
+      // Show Success Modal with 1-tap WhatsApp trigger
+      showSuccessModal(name, phone, waUrl);
+    });
+  });
+}
+
+function showSuccessModal(name, phone, waUrl) {
+  const successModal = document.getElementById("leadSuccessModal");
+  if (!successModal) {
+    // If modal element not found, redirect directly
+    window.open(waUrl, "_blank");
+    return;
+  }
+
+  const nameEl = successModal.querySelector(".success-lead-name");
+  if (nameEl) nameEl.textContent = name;
+
+  const waBtn = successModal.querySelector(".whatsapp-continue-btn");
+  if (waBtn) {
+    waBtn.href = waUrl;
+  }
+
+  successModal.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+
+  const sheet = successModal.querySelector(".app-modal-sheet");
+  if (sheet) {
+    requestAnimationFrame(() => {
+      sheet.classList.add("sheet-open");
+    });
+  }
+}
