@@ -33,7 +33,7 @@ A high-converting real estate web portal engineered for **Codename Majha Ghar** 
 1. **Price & Blueprint Gating Rule:** Masked launch pricing and blurred architectural floor plans unlock dynamically upon submitting a verified 10-digit Indian mobile number.
 2. **Strict Indian Phone Sanitization:** Validates `^[6-9]\d{9}$`, auto-strips `+91`, `91`, leading `0`, spaces, and non-numeric characters.
 3. **Animated Stat Counters:** 1.8-second `easeOutExpo` count-up using `tabular-nums` and `IntersectionObserver`.
-4. **Interactive Site Visit Date Picker:** Day chips (`Today`, `Tomorrow`, `Saturday`, `Sunday`) with complimentary AC cab facility toggle.
+4. **Interactive Site Visit Date Picker:** Day chips (`Today`, `Tomorrow`, `Saturday`, `Sunday`) with calendar synchronization.
 5. **Instant Lead Routing:** WhatsApp dossier generation and `localStorage` backup without third-party dependencies.
 6. **Statutory Compliance Suite:** Dedicated pages for MahaRERA approvals, zero-email privacy policy, and terms & conditions.
 

@@ -186,6 +186,9 @@
       .header-btn-desktop {
         display: none !important;
       }
+      .header-whatsapp-mobile {
+        display: inline-flex !important;
+      }
       .mobile-toggle {
         display: flex !important;
       }
@@ -202,7 +205,7 @@
   </style>
 
   <!-- Custom Styles (Matching https://royalegalaxy.in/) with Cache Busting -->
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261022_v8">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261022_v9">
 </head>
 
 <body>
@@ -236,6 +239,12 @@
           <span>+91 84228 61465</span>
         </a>
 
+        <!-- Desktop Direct WhatsApp Enquiry -->
+        <a href="https://wa.me/918422861465?text=Hi%2C%20I%20am%20interested%20in%20Codename%20Majha%20Ghar%20Dombivli%20East.%20Please%20share%20the%20details." target="_blank" rel="noopener" class="header-btn-desktop" style="align-items: center; gap: 6px; color: #25D366; text-decoration: none; font-size: 0.82rem; font-weight: 600; padding: 7px 13px; border-radius: 8px; background: rgba(37, 211, 102, 0.12); border: 1px solid rgba(37, 211, 102, 0.45); transition: all 0.2s ease;">
+          <i data-lucide="message-circle" style="width: 14px; height: 14px;"></i>
+          <span>WhatsApp</span>
+        </a>
+
         <!-- Desktop Brochure CTA -->
         <button data-open-modal="leadModal" data-modal-title="Download Brochure" class="btn-outline-gold header-btn-desktop" style="padding: 7px 14px; font-size: 0.82rem;">
           <i data-lucide="download" style="width: 14px; height: 14px;"></i>
@@ -247,6 +256,11 @@
           <i data-lucide="calendar" style="width: 14px; height: 14px;"></i>
           <span>Book Visit</span>
         </button>
+
+        <!-- Mobile Direct WhatsApp Button (< 1024px) -->
+        <a href="https://wa.me/918422861465?text=Hi%2C%20I%20am%20interested%20in%20Codename%20Majha%20Ghar%20Dombivli%20East.%20Please%20share%20the%20details." target="_blank" rel="noopener" class="header-whatsapp-mobile" style="display: none; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 8px; background: rgba(37, 211, 102, 0.15); border: 1px solid rgba(37, 211, 102, 0.45); color: #25D366; text-decoration: none;" aria-label="WhatsApp Enquiry">
+          <i data-lucide="message-circle" style="width: 18px; height: 18px;"></i>
+        </a>
 
         <!-- Mobile Menu Toggle Button (< 1024px) -->
         <button id="mobileNavToggle" class="mobile-toggle" style="background: rgba(212, 175, 55, 0.12); border: 1px solid var(--border-gold); border-radius: 8px; color: var(--gold-light); cursor: pointer; padding: 8px; display: flex; align-items: center; justify-content: center;" aria-label="Toggle navigation menu">
@@ -267,6 +281,10 @@
       <a href="rera-approvals.html" style="color: var(--gold-light); text-decoration: none; font-size: 1rem; font-weight: 600; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">MahaRERA Approvals</a>
       
       <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+        <a href="https://wa.me/918422861465?text=Hi%2C%20I%20am%20interested%20in%20Codename%20Majha%20Ghar%20Dombivli%20East.%20Please%20share%20the%20details." target="_blank" rel="noopener" style="justify-content: center; padding: 12px 16px; font-size: 0.9rem; text-decoration: none; display: flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #25D366, #128C7E); color: #FFF; font-weight: 700; border-radius: 8px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);">
+          <i data-lucide="message-circle" style="width: 18px; height: 18px;"></i>
+          <span>Direct WhatsApp Enquiry</span>
+        </a>
         <button data-open-modal="leadModal" data-modal-title="Download Brochure" class="btn-outline-gold" style="justify-content: center;">
           <i data-lucide="download" style="width: 16px; height: 16px;"></i> Download E-Brochure
         </button>
@@ -363,6 +381,14 @@
             <i data-lucide="calendar" style="width: 16px; height: 16px;"></i>
             <span>Schedule VIP Site Visit</span>
           </button>
+
+          <a href="https://wa.me/918422861465?text=Hi%2C%20I%20am%20interested%20in%20Codename%20Majha%20Ghar%20Dombivli%20East.%20Please%20share%20the%20brochure%20and%20pricing." target="_blank" rel="noopener" style="padding: 12px 20px; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #25D366, #128C7E); color: #FFF; font-weight: 700; border-radius: 8px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35); transition: all 0.3s ease;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.586 1.831.956 2.796.957 3.18 0 5.767-2.587 5.768-5.766 0-3.181-2.587-5.768-5.768-5.768zm3.364 8.167c-.14.394-.789.756-1.096.799-.297.042-.68.06-1.085-.072-.257-.084-.58-.2-1.002-.383-1.765-.765-2.909-2.55-2.997-2.668-.088-.119-.719-.956-.719-1.821 0-.865.454-1.291.616-1.468.161-.177.352-.222.47-.222.118 0 .235.001.338.006.109.005.255-.041.398.303.148.356.505 1.233.549 1.322.044.089.073.193.015.311-.059.119-.088.193-.176.297-.089.104-.187.233-.267.313-.089.089-.182.186-.078.365.104.178.461.76 1.002 1.242.697.621 1.285.814 1.468.903.183.089.292.074.401-.052.109-.126.468-.546.593-.733.125-.187.25-.156.421-.093.171.063 1.086.512 1.273.606.187.094.312.14.358.219.047.078.047.453-.093.847z"/>
+              <path d="M12 2a10 10 0 0 0-8.485 15.318L2 22l4.808-1.262A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.086-1.121l-.293-.174-2.857.75.763-2.787-.19-.302A8 8 0 1 1 12 20z"/>
+            </svg>
+            <span>WhatsApp Enquiry</span>
+          </a>
 
           <a href="tel:+918422861465" class="btn-secondary" style="padding: 12px 20px; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; color: var(--gold-light); background: rgba(14, 20, 34, 0.85); border: 1px solid var(--border-gold);">
             <i data-lucide="phone" style="width: 16px; height: 16px; color: var(--gold-primary);"></i>
@@ -495,11 +521,14 @@
               </div>
             </div>
 
-            <div style="display: flex; gap: 10px;">
+            <div style="display: flex; gap: 8px;">
               <button data-open-modal="leadModal" data-modal-title="Unlock 1 BHK Pricing" data-modal-config="1 BHK Residence (₹ 37 Lakhs*)" class="btn-gold" style="flex: 1;">
                 <i data-lucide="unlock" style="width: 15px; height: 15px;"></i> Unlock Price
               </button>
-              <a href="tel:+918422861465" class="btn-secondary" style="padding: 11px 16px; text-decoration: none;">
+              <a href="https://wa.me/918422861465?text=Hi%2C%20I%20am%20interested%20in%20the%201%20BHK%20Residence%20(₹37%20Lakhs)%20at%20Codename%20Majha%20Ghar." target="_blank" rel="noopener" style="padding: 11px 14px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; background: rgba(37, 211, 102, 0.15); border: 1px solid rgba(37, 211, 102, 0.45); border-radius: var(--radius-sm); color: #25D366; transition: all 0.2s ease;" title="WhatsApp Direct Enquiry">
+                <i data-lucide="message-circle" style="width: 16px; height: 16px;"></i>
+              </a>
+              <a href="tel:+918422861465" class="btn-secondary" style="padding: 11px 14px; text-decoration: none;" title="Call Sales">
                 <i data-lucide="phone" style="width: 15px; height: 15px; color: var(--gold-primary);"></i>
               </a>
             </div>
@@ -551,11 +580,14 @@
               </div>
             </div>
 
-            <div style="display: flex; gap: 10px;">
+            <div style="display: flex; gap: 8px;">
               <button data-open-modal="leadModal" data-modal-title="Unlock 2.5 BHK Pricing" data-modal-config="2.5 BHK Residence (₹ 75 Lakhs*)" class="btn-gold" style="flex: 1;">
                 <i data-lucide="unlock" style="width: 15px; height: 15px;"></i> Unlock Price
               </button>
-              <a href="tel:+918422861465" class="btn-secondary" style="padding: 11px 16px; text-decoration: none;">
+              <a href="https://wa.me/918422861465?text=Hi%2C%20I%20am%20interested%20in%20the%202.5%20BHK%20Residence%20(₹75%20Lakhs)%20at%20Codename%20Majha%20Ghar." target="_blank" rel="noopener" style="padding: 11px 14px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; background: rgba(37, 211, 102, 0.15); border: 1px solid rgba(37, 211, 102, 0.45); border-radius: var(--radius-sm); color: #25D366; transition: all 0.2s ease;" title="WhatsApp Direct Enquiry">
+                <i data-lucide="message-circle" style="width: 16px; height: 16px;"></i>
+              </a>
+              <a href="tel:+918422861465" class="btn-secondary" style="padding: 11px 14px; text-decoration: none;" title="Call Sales">
                 <i data-lucide="phone" style="width: 15px; height: 15px; color: var(--gold-primary);"></i>
               </a>
             </div>
@@ -760,20 +792,24 @@
 
         </div>
 
-        <!-- Free AC Cab Banner -->
-        <div class="glass-card" style="margin-top: 40px; padding: 24px; border: 1px solid var(--border-gold); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;">
+        <!-- Direct WhatsApp Direct Enquiry Banner -->
+        <div class="glass-card" style="margin-top: 40px; padding: 24px; border: 1px solid rgba(37, 211, 102, 0.4); background: rgba(37, 211, 102, 0.04); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;">
           <div style="display: flex; align-items: center; gap: 16px;">
-            <div style="width: 50px; height: 50px; border-radius: 12px; background: rgba(212, 175, 55, 0.15); display: flex; align-items: center; justify-content: center; color: var(--gold-primary); flex-shrink: 0;">
-              <i data-lucide="car-taxi-front" style="width: 26px; height: 26px;"></i>
+            <div style="width: 50px; height: 50px; border-radius: 12px; background: rgba(37, 211, 102, 0.18); display: flex; align-items: center; justify-content: center; color: #25D366; flex-shrink: 0;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.586 1.831.956 2.796.957 3.18 0 5.767-2.587 5.768-5.766 0-3.181-2.587-5.768-5.768-5.768zm3.364 8.167c-.14.394-.789.756-1.096.799-.297.042-.68.06-1.085-.072-.257-.084-.58-.2-1.002-.383-1.765-.765-2.909-2.55-2.997-2.668-.088-.119-.719-.956-.719-1.821 0-.865.454-1.291.616-1.468.161-.177.352-.222.47-.222.118 0 .235.001.338.006.109.005.255-.041.398.303.148.356.505 1.233.549 1.322.044.089.073.193.015.311-.059.119-.088.193-.176.297-.089.104-.187.233-.267.313-.089.089-.182.186-.078.365.104.178.461.76 1.002 1.242.697.621 1.285.814 1.468.903.183.089.292.074.401-.052.109-.126.468-.546.593-.733.125-.187.25-.156.421-.093.171.063 1.086.512 1.273.606.187.094.312.14.358.219.047.078.047.453-.093.847z"/>
+                <path d="M12 2a10 10 0 0 0-8.485 15.318L2 22l4.808-1.262A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.086-1.121l-.293-.174-2.857.75.763-2.787-.19-.302A8 8 0 1 1 12 20z"/>
+              </svg>
             </div>
             <div>
-              <h4 class="font-display" style="color: #FFF; font-size: 1.15rem;">Complimentary Doorstep AC Cab for Site Visit</h4>
-              <p style="color: var(--text-secondary); font-size: 0.82rem; margin-top: 2px;">Free pick-up &amp; drop anywhere across Mumbai, Thane, or Navi Mumbai.</p>
+              <h4 class="font-display" style="color: #FFF; font-size: 1.15rem;">Direct WhatsApp Sales Concierge</h4>
+              <p style="color: var(--text-secondary); font-size: 0.82rem; margin-top: 2px;">Connect with our authorized relationship desk for unit layouts, pricing sheets, and booking assistance.</p>
             </div>
           </div>
-          <button data-open-modal="leadModal" data-modal-title="Book Free AC Cab Site Visit" class="btn-gold">
-            Book Free Cab &rarr;
-          </button>
+          <a href="https://wa.me/918422861465?text=Hi%2C%20I%20am%20interested%20in%20Codename%20Majha%20Ghar%20Dombivli%20East.%20Please%20share%20the%20brochure%2C%20pricing%2C%20and%20floor%20plans." target="_blank" rel="noopener" style="padding: 12px 24px; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #25D366, #128C7E); color: #FFF; font-weight: 700; border-radius: 8px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);">
+            <i data-lucide="message-circle" style="width: 18px; height: 18px;"></i>
+            <span>Chat on WhatsApp &rarr;</span>
+          </a>
         </div>
 
       </div>
@@ -1013,9 +1049,9 @@
                 <a href="https://maps.google.com/?q=Sonarpada+Dombivli+East" target="_blank" rel="noopener" class="btn-secondary" style="flex: 1; padding: 8px 12px; font-size: 0.78rem; text-decoration: none; justify-content: center;">
                   Open Google Maps &rarr;
                 </a>
-                <button data-open-modal="leadModal" data-modal-title="Book Free AC Cab" class="btn-gold" style="padding: 8px 14px; font-size: 0.78rem;">
-                  Free Cab
-                </button>
+                <a href="https://wa.me/918422861465?text=Hi%2C%20please%20send%20me%20the%20exact%20Google%20Maps%20location%20pin%20and%20directions%20for%20Codename%20Majha%20Ghar%20Dombivli%20East." target="_blank" rel="noopener" style="padding: 8px 14px; font-size: 0.78rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #25D366, #128C7E); color: #FFF; font-weight: 600; border-radius: var(--radius-sm); box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);">
+                  <i data-lucide="message-circle" style="width: 14px; height: 14px;"></i> WhatsApp Pin
+                </a>
               </div>
             </div>
           </div>
@@ -1143,18 +1179,25 @@
       <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.586 1.831.956 2.796.957 3.18 0 5.767-2.587 5.768-5.766 0-3.181-2.587-5.768-5.768-5.768zm3.364 8.167c-.14.394-.789.756-1.096.799-.297.042-.68.06-1.085-.072-.257-.084-.58-.2-1.002-.383-1.765-.765-2.909-2.55-2.997-2.668-.088-.119-.719-.956-.719-1.821 0-.865.454-1.291.616-1.468.161-.177.352-.222.47-.222.118 0 .235.001.338.006.109.005.255-.041.398.303.148.356.505 1.233.549 1.322.044.089.073.193.015.311-.059.119-.088.193-.176.297-.089.104-.187.233-.267.313-.089.089-.182.186-.078.365.104.178.461.76 1.002 1.242.697.621 1.285.814 1.468.903.183.089.292.074.401-.052.109-.126.468-.546.593-.733.125-.187.25-.156.421-.093.171.063 1.086.512 1.273.606.187.094.312.14.358.219.047.078.047.453-.093.847z"/>
       <path d="M12 2a10 10 0 0 0-8.485 15.318L2 22l4.808-1.262A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.086-1.121l-.293-.174-2.857.75.763-2.787-.19-.302A8 8 0 1 1 12 20z"/>
     </svg>
+    <span class="whatsapp-float-label">Chat on WhatsApp</span>
     <span class="whatsapp-pulse"></span>
   </a>
 
   <!-- ========================================================
        MOBILE STICKY BOTTOM BAR (Screens <= 767px)
        ======================================================== -->
-  <div class="mobile-sticky-bar" style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: rgba(7, 10, 16, 0.96); backdrop-filter: blur(16px); border-top: 1px solid var(--border-gold); padding: 10px 14px; gap: 10px; justify-content: center; box-shadow: 0 -8px 24px rgba(0,0,0,0.8);">
-    <a href="tel:+918422861465" class="btn-outline-gold" style="flex: 1; padding: 9px 10px; font-size: 0.82rem; justify-content: center;">
-      <i data-lucide="phone" style="width: 14px; height: 14px;"></i> Call Sales
+  <div class="mobile-sticky-bar" style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: rgba(7, 10, 16, 0.96); backdrop-filter: blur(16px); border-top: 1px solid var(--border-gold); padding: 10px 12px; gap: 8px; justify-content: center; box-shadow: 0 -8px 24px rgba(0,0,0,0.8);">
+    <a href="tel:+918422861465" class="btn-outline-gold" style="flex: 1; padding: 9px 6px; font-size: 0.8rem; justify-content: center; white-space: nowrap;">
+      <i data-lucide="phone" style="width: 13px; height: 13px;"></i> Call
     </a>
-    <button data-open-modal="leadModal" data-modal-title="Book Site Visit" class="btn-gold" style="flex: 1; padding: 9px 10px; font-size: 0.82rem; justify-content: center;">
-      <i data-lucide="calendar" style="width: 14px; height: 14px;"></i> Book Visit
+    <a href="https://wa.me/918422861465?text=Hi%2C%20I%20am%20interested%20in%20Codename%20Majha%20Ghar%20Dombivli%20East.%20Please%20share%20the%20brochure%20and%20pricing." target="_blank" rel="noopener" style="flex: 1.25; padding: 9px 8px; font-size: 0.8rem; justify-content: center; background: linear-gradient(135deg, #25D366, #128C7E); color: #FFF; font-weight: 700; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35); white-space: nowrap;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.586 1.831.956 2.796.957 3.18 0 5.767-2.587 5.768-5.766 0-3.181-2.587-5.768-5.768-5.768zm3.364 8.167c-.14.394-.789.756-1.096.799-.297.042-.68.06-1.085-.072-.257-.084-.58-.2-1.002-.383-1.765-.765-2.909-2.55-2.997-2.668-.088-.119-.719-.956-.719-1.821 0-.865.454-1.291.616-1.468.161-.177.352-.222.47-.222.118 0 .235.001.338.006.109.005.255-.041.398.303.148.356.505 1.233.549 1.322.044.089.073.193.015.311-.059.119-.088.193-.176.297-.089.104-.187.233-.267.313-.089.089-.182.186-.078.365.104.178.461.76 1.002 1.242.697.621 1.285.814 1.468.903.183.089.292.074.401-.052.109-.126.468-.546.593-.733.125-.187.25-.156.421-.093.171.063 1.086.512 1.273.606.187.094.312.14.358.219.047.078.047.453-.093.847z"/>
+        <path d="M12 2a10 10 0 0 0-8.485 15.318L2 22l4.808-1.262A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.086-1.121l-.293-.174-2.857.75.763-2.787-.19-.302A8 8 0 1 1 12 20z"/>
+      </svg> WhatsApp
+    </a>
+    <button data-open-modal="leadModal" data-modal-title="Book Site Visit" class="btn-gold" style="flex: 1; padding: 9px 6px; font-size: 0.8rem; justify-content: center; white-space: nowrap;">
+      <i data-lucide="calendar" style="width: 13px; height: 13px;"></i> Book Visit
     </button>
   </div>
 
@@ -1266,7 +1309,7 @@
   </div>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js?v=20261022_v9"></script>
   <script>
     lucide.createIcons();
   </script>
