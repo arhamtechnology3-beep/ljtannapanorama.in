@@ -314,12 +314,20 @@ function initMobileDrawer() {
   if (!toggleBtn || !drawer) return;
 
   toggleBtn.addEventListener("click", () => {
-    drawer.classList.toggle("hidden");
+    const isHidden = drawer.classList.contains("hidden") || drawer.style.display === "none";
+    if (isHidden) {
+      drawer.classList.remove("hidden");
+      drawer.style.display = "flex";
+    } else {
+      drawer.classList.add("hidden");
+      drawer.style.display = "none";
+    }
   });
 
   drawer.querySelectorAll("a, button").forEach((item) => {
     item.addEventListener("click", () => {
       drawer.classList.add("hidden");
+      drawer.style.display = "none";
     });
   });
 }
@@ -328,6 +336,9 @@ function initMobileDrawer() {
    8. MODAL & BOTTOM SHEET ENGINE
    ======================================================== */
 function initModals() {
+  // Ensure all modals start closed
+  closeAllModals();
+
   // Open triggers
   document.querySelectorAll("[data-open-modal]").forEach((btn) => {
     btn.addEventListener("click", (e) => {

@@ -84,7 +84,7 @@
     </div>
 
     <!-- Mobile Slide-Down Drawer -->
-    <div id="mobileNavDrawer" class="hidden" style="background: rgba(7, 10, 16, 0.98); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-gold); padding: 20px; display: flex; flex-direction: column; gap: 14px; max-height: calc(100vh - 68px); overflow-y: auto;">
+    <div id="mobileNavDrawer" class="hidden" style="display: none; background: rgba(7, 10, 16, 0.98); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-gold); padding: 20px; flex-direction: column; gap: 14px; max-height: calc(100vh - 68px); overflow-y: auto;">
       <a href="#overview" style="color: var(--text-primary); text-decoration: none; font-size: 1rem; font-weight: 600; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">Overview</a>
       <a href="#gallery" style="color: var(--text-primary); text-decoration: none; font-size: 1rem; font-weight: 600; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">3D Gallery</a>
       <a href="#configurations" style="color: var(--text-primary); text-decoration: none; font-size: 1rem; font-weight: 600; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">Residences &amp; Plans</a>
@@ -920,7 +920,7 @@
   <!-- ========================================================
        LEAD CAPTURE MODAL (STRICTLY NO EMAIL)
        ======================================================== -->
-  <div id="leadModal" class="modal-container fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 hidden" style="position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center;">
+  <div id="leadModal" class="modal-container hidden" style="position: fixed; inset: 0; z-index: 2000; display: none;">
     <div class="modal-backdrop" style="position: absolute; inset: 0; background: rgba(4, 6, 10, 0.85); backdrop-filter: blur(12px);"></div>
 
     <div class="app-modal-sheet glass-card" style="position: relative; z-index: 10; width: 100%; max-width: 440px; border: 1px solid var(--border-gold-bright); padding: 26px; border-radius: var(--radius-lg); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9);">
@@ -990,7 +990,7 @@
   <!-- ========================================================
        SUCCESS MODAL
        ======================================================== -->
-  <div id="leadSuccessModal" class="modal-container fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 hidden" style="position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center;">
+  <div id="leadSuccessModal" class="modal-container hidden" style="position: fixed; inset: 0; z-index: 2000; display: none;">
     <div class="modal-backdrop" style="position: absolute; inset: 0; background: rgba(4, 6, 10, 0.85); backdrop-filter: blur(12px);"></div>
 
     <div class="app-modal-sheet glass-card" style="position: relative; z-index: 10; width: 100%; max-width: 440px; border: 1.5px solid #34d399; padding: 28px; border-radius: var(--radius-lg); text-align: center; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9);">
