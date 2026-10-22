@@ -28,8 +28,181 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Custom Styles (Matching https://royalegalaxy.in/) -->
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <!-- Critical Theme Styles (Guarantees zero white-screen or cache delay) -->
+  <style>
+    :root {
+      --bg-dark: #070A10;
+      --bg-darker: #04060A;
+      --bg-card: #0E1422;
+      --bg-card-hover: #161F33;
+      --bg-glass: rgba(14, 20, 34, 0.85);
+      --gold-primary: #D4AF37;
+      --gold-light: #F7E7B4;
+      --gold-dark: #A37F14;
+      --gold-gradient: linear-gradient(135deg, #BF953F 0%, #FCF6BA 30%, #B38728 65%, #AA771C 100%);
+      --gold-glow: 0 0 20px rgba(212, 175, 55, 0.25);
+      --text-primary: #F8FAFC;
+      --text-secondary: #94A3B8;
+      --text-muted: #64748B;
+      --text-gold: #E6CA65;
+      --border-gold: rgba(212, 175, 55, 0.22);
+      --border-gold-bright: rgba(212, 175, 55, 0.5);
+      --border-glass: rgba(255, 255, 255, 0.08);
+      --radius-xl: 20px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --font-display: "Cinzel", serif;
+      --font-serif: "Playfair Display", serif;
+      --font-sans: "Plus Jakarta Sans", sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      background-color: #070A10 !important;
+      color: #F8FAFC !important;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      line-height: 1.6;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+    .font-display { font-family: "Cinzel", serif !important; }
+    .font-serif { font-family: "Playfair Display", serif !important; }
+    .text-gold {
+      background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 30%, #B38728 65%, #AA771C 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+    .badge-gold {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      padding: 5px 12px !important;
+      border-radius: 30px !important;
+      background: rgba(212, 175, 55, 0.12) !important;
+      border: 1px solid rgba(212, 175, 55, 0.5) !important;
+      color: #F7E7B4 !important;
+      font-size: 0.78rem !important;
+      font-weight: 600 !important;
+      text-transform: uppercase !important;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 30%, #B38728 65%, #AA771C 100%) !important;
+      color: #070A10 !important;
+      font-weight: 700 !important;
+      border: none !important;
+      border-radius: 12px !important;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3) !important;
+      text-decoration: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      cursor: pointer !important;
+    }
+    .btn-gold:hover {
+      filter: brightness(1.1) !important;
+      transform: translateY(-2px) !important;
+    }
+    .btn-outline-gold {
+      background: transparent !important;
+      color: #F7E7B4 !important;
+      border: 1px solid #D4AF37 !important;
+      border-radius: 12px !important;
+      text-decoration: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      cursor: pointer !important;
+    }
+    .btn-outline-gold:hover {
+      background: rgba(212, 175, 55, 0.15) !important;
+      color: #FFFFFF !important;
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06) !important;
+      color: #F8FAFC !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      border-radius: 12px !important;
+      text-decoration: none !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      cursor: pointer !important;
+    }
+    .glass-card {
+      background: rgba(14, 20, 34, 0.85) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 16px !important;
+    }
+    .hover-card-lift {
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease, box-shadow 0.35s ease !important;
+    }
+    .hover-card-lift:hover {
+      transform: translateY(-5px) !important;
+      border-color: rgba(212, 175, 55, 0.6) !important;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 25px rgba(212, 175, 55, 0.3) !important;
+    }
+    /* Mobile sticky dock: STRICTLY HIDDEN ON DESKTOP */
+    @media (min-width: 768px) {
+      .mobile-sticky-bar {
+        display: none !important;
+      }
+    }
+    @media (max-width: 767px) {
+      .mobile-sticky-bar {
+        display: flex !important;
+      }
+    }
+    /* Header Responsive Visibility */
+    @media (min-width: 1024px) {
+      .desktop-nav {
+        display: flex !important;
+      }
+      .call-btn-desktop {
+        display: flex !important;
+      }
+      .header-btn-desktop {
+        display: inline-flex !important;
+      }
+      .mobile-toggle {
+        display: none !important;
+      }
+    }
+    @media (max-width: 1023px) {
+      .desktop-nav {
+        display: none !important;
+      }
+      .call-btn-desktop {
+        display: none !important;
+      }
+      .header-btn-desktop {
+        display: none !important;
+      }
+      .mobile-toggle {
+        display: flex !important;
+      }
+    }
+    .hidden {
+      display: none !important;
+    }
+    .modal-container {
+      display: none;
+    }
+    .modal-container:not(.hidden) {
+      display: flex !important;
+    }
+  </style>
+
+  <!-- Custom Styles (Matching https://royalegalaxy.in/) with Cache Busting -->
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261022_v5">
 </head>
 
 <body>
@@ -46,7 +219,7 @@
       </a>
 
       <!-- Desktop Nav Links (>= 1024px) -->
-      <nav class="desktop-nav" style="display: none; gap: 24px; align-items: center;">
+      <nav class="desktop-nav" style="gap: 24px; align-items: center;">
         <a href="#overview" style="color: var(--text-secondary); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s ease; white-space: nowrap;">Overview</a>
         <a href="#gallery" style="color: var(--text-secondary); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s ease; white-space: nowrap;">3D Gallery</a>
         <a href="#configurations" style="color: var(--text-secondary); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s ease; white-space: nowrap;">Residences &amp; Plans</a>
@@ -58,7 +231,7 @@
       <!-- Desktop & Mobile Right Actions -->
       <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
         <!-- Desktop Call Hotline -->
-        <a href="tel:+918422861465" class="call-btn-desktop" style="display: none; align-items: center; gap: 6px; color: var(--text-primary); text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 6px 12px; border-radius: 8px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+        <a href="tel:+918422861465" class="call-btn-desktop" style="align-items: center; gap: 6px; color: var(--text-primary); text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 6px 12px; border-radius: 8px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
           <i data-lucide="phone" style="width: 14px; height: 14px; color: var(--gold-primary);"></i>
           <span>+91 84228 61465</span>
         </a>
@@ -131,10 +304,10 @@
           </div>
         </div>
 
-        <!-- Main Heading -->
-        <h1 class="font-display" style="font-size: clamp(1.7rem, 5.5vw, 4.2rem); font-weight: 700; line-height: 1.2; color: #FFFFFF; margin-bottom: 16px; letter-spacing: -0.3px; word-break: break-word; overflow-wrap: break-word;">
-          CODENAME MAJHA GHAR <br>
-          <span class="text-gold" style="font-family: var(--font-serif); font-style: italic; font-weight: 600; display: inline-block;">Where Every Moment is a Masterpiece</span>
+        <!-- Main Heading (Royale Galaxy Typography) -->
+        <h1 class="font-display text-gold" style="font-size: clamp(2rem, 5.2vw, 4.2rem); font-weight: 800; line-height: 1.15; margin-bottom: 16px; letter-spacing: 0.5px; text-transform: uppercase;">
+          CODENAME MAJHA GHAR
+          <span class="font-serif" style="display: block; font-style: italic; font-weight: 500; font-size: clamp(1.2rem, 3vw, 2.1rem); color: var(--gold-light); margin-top: 8px; text-transform: none; letter-spacing: normal; -webkit-text-fill-color: initial;">Where Every Moment is a Masterpiece</span>
         </h1>
 
         <!-- Subtitle Paragraph -->
@@ -191,9 +364,9 @@
             <span>Schedule VIP Site Visit</span>
           </button>
 
-          <a href="tel:+918422861465" class="btn-secondary" style="padding: 12px 20px; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+          <a href="tel:+918422861465" class="btn-secondary" style="padding: 12px 20px; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; color: var(--gold-light); background: rgba(14, 20, 34, 0.85); border: 1px solid var(--border-gold);">
             <i data-lucide="phone" style="width: 16px; height: 16px; color: var(--gold-primary);"></i>
-            <span>84228 61465</span>
+            <span style="font-family: var(--font-mono); font-weight: 700; color: #FFF;">84228 61465</span>
           </a>
         </div>
 
@@ -908,7 +1081,7 @@
   <!-- ========================================================
        MOBILE STICKY BOTTOM BAR (Screens <= 767px)
        ======================================================== -->
-  <div class="mobile-sticky-bar" style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: rgba(7, 10, 16, 0.96); backdrop-filter: blur(16px); border-top: 1px solid var(--border-gold); padding: 10px 14px; display: flex; gap: 10px; justify-content: center; box-shadow: 0 -8px 24px rgba(0,0,0,0.8);">
+  <div class="mobile-sticky-bar" style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: rgba(7, 10, 16, 0.96); backdrop-filter: blur(16px); border-top: 1px solid var(--border-gold); padding: 10px 14px; gap: 10px; justify-content: center; box-shadow: 0 -8px 24px rgba(0,0,0,0.8);">
     <a href="tel:+918422861465" class="btn-outline-gold" style="flex: 1; padding: 9px 10px; font-size: 0.82rem; justify-content: center;">
       <i data-lucide="phone" style="width: 14px; height: 14px;"></i> Call Sales
     </a>

@@ -361,9 +361,17 @@ h1, h2, h3, h4, h5, h6, p, span, a, button, label {
 }
 
 /* Mobile Sticky Bottom Bar */
+.mobile-sticky-bar {
+  display: flex;
+}
 @media (min-width: 768px) {
   .mobile-sticky-bar {
     display: none !important;
+  }
+}
+@media (max-width: 767px) {
+  .mobile-sticky-bar {
+    display: flex !important;
   }
 }
 
