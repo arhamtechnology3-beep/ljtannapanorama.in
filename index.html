@@ -31,22 +31,33 @@
   <!-- Critical Theme Styles (Guarantees zero white-screen or cache delay) -->
   <style>
     :root {
-      --bg-dark: #070A10;
-      --bg-darker: #04060A;
-      --bg-card: #0E1422;
-      --bg-card-hover: #161F33;
-      --bg-glass: rgba(14, 20, 34, 0.85);
+      /* Official Theme Colors as per Logo & Brochure:
+         - Primary Royal Midnight Navy: #0A143A / #070D24
+         - Signature Magenta/Fuchsia: #E5007C ("माझं घर" & Floral Emblem)
+         - Radiant Saffron Flame: #EF7C00 (Logo Energy & Highlights)
+         - Warm Champagne Peach: #FCD5A4 (Logo Accents & Brochure Gold)
+         - Metallic Gold: #D4AF37
+      */
+      --bg-dark: #0A143A;
+      --bg-darker: #060D26;
+      --bg-card: rgba(15, 29, 77, 0.75);
+      --bg-card-hover: rgba(22, 39, 102, 0.9);
+      --bg-glass: rgba(10, 20, 58, 0.85);
+      --brand-magenta: #E5007C;
+      --brand-orange: #EF7C00;
+      --brand-peach: #FCD5A4;
       --gold-primary: #D4AF37;
-      --gold-light: #F7E7B4;
-      --gold-dark: #A37F14;
-      --gold-gradient: linear-gradient(135deg, #BF953F 0%, #FCF6BA 30%, #B38728 65%, #AA771C 100%);
-      --gold-glow: 0 0 20px rgba(212, 175, 55, 0.25);
-      --text-primary: #F8FAFC;
-      --text-secondary: #94A3B8;
-      --text-muted: #64748B;
-      --text-gold: #E6CA65;
-      --border-gold: rgba(212, 175, 55, 0.22);
-      --border-gold-bright: rgba(212, 175, 55, 0.5);
+      --gold-light: #FCD5A4;
+      --gold-dark: #C48821;
+      --gold-gradient: linear-gradient(135deg, #FCD5A4 0%, #D4AF37 40%, #EF7C00 100%);
+      --gold-glow: 0 0 22px rgba(239, 124, 0, 0.22), 0 0 12px rgba(229, 0, 124, 0.15);
+      --text-primary: #FFFFFF;
+      --text-secondary: #CBD5E1;
+      --text-muted: #8E9BAE;
+      --text-gold: #FCD5A4;
+      --border-gold: rgba(252, 213, 164, 0.25);
+      --border-gold-bright: rgba(252, 213, 164, 0.6);
+      --border-brand: rgba(229, 0, 124, 0.35);
       --border-glass: rgba(255, 255, 255, 0.08);
       --radius-xl: 20px;
       --radius-lg: 16px;
@@ -63,8 +74,8 @@
       padding: 0;
     }
     html, body {
-      background-color: #070A10 !important;
-      color: #F8FAFC !important;
+      background-color: #0A143A !important;
+      color: #FFFFFF !important;
       font-family: "Plus Jakarta Sans", sans-serif;
       line-height: 1.6;
       width: 100%;
@@ -74,7 +85,7 @@
     .font-display { font-family: "Cinzel", serif !important; }
     .font-serif { font-family: "Playfair Display", serif !important; }
     .text-gold {
-      background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 30%, #B38728 65%, #AA771C 100%) !important;
+      background: linear-gradient(135deg, #FFFFFF 0%, #FCD5A4 30%, #D4AF37 65%, #EF7C00 100%) !important;
       -webkit-background-clip: text !important;
       -webkit-text-fill-color: transparent !important;
     }
@@ -84,20 +95,20 @@
       gap: 6px !important;
       padding: 5px 12px !important;
       border-radius: 30px !important;
-      background: rgba(212, 175, 55, 0.12) !important;
-      border: 1px solid rgba(212, 175, 55, 0.5) !important;
-      color: #F7E7B4 !important;
+      background: rgba(229, 0, 124, 0.12) !important;
+      border: 1px solid rgba(229, 0, 124, 0.45) !important;
+      color: #FCD5A4 !important;
       font-size: 0.78rem !important;
       font-weight: 600 !important;
       text-transform: uppercase !important;
     }
     .btn-gold {
-      background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 30%, #B38728 65%, #AA771C 100%) !important;
-      color: #070A10 !important;
+      background: linear-gradient(135deg, #FCD5A4 0%, #D4AF37 40%, #EF7C00 100%) !important;
+      color: #0A143A !important;
       font-weight: 700 !important;
       border: none !important;
       border-radius: 12px !important;
-      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3) !important;
+      box-shadow: 0 4px 18px rgba(239, 124, 0, 0.35) !important;
       text-decoration: none !important;
       display: inline-flex !important;
       align-items: center !important;
@@ -110,9 +121,9 @@
       transform: translateY(-2px) !important;
     }
     .btn-outline-gold {
-      background: transparent !important;
-      color: #F7E7B4 !important;
-      border: 1px solid #D4AF37 !important;
+      background: rgba(10, 20, 58, 0.6) !important;
+      color: #FCD5A4 !important;
+      border: 1px solid rgba(252, 213, 164, 0.5) !important;
       border-radius: 12px !important;
       text-decoration: none !important;
       display: inline-flex !important;
@@ -122,13 +133,14 @@
       cursor: pointer !important;
     }
     .btn-outline-gold:hover {
-      background: rgba(212, 175, 55, 0.15) !important;
+      background: rgba(229, 0, 124, 0.15) !important;
+      border-color: #E5007C !important;
       color: #FFFFFF !important;
     }
     .btn-secondary {
       background: rgba(255, 255, 255, 0.06) !important;
-      color: #F8FAFC !important;
-      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      color: #FFFFFF !important;
+      border: 1px solid rgba(252, 213, 164, 0.22) !important;
       border-radius: 12px !important;
       text-decoration: none !important;
       display: inline-flex !important;
@@ -138,8 +150,8 @@
       cursor: pointer !important;
     }
     .glass-card {
-      background: rgba(14, 20, 34, 0.85) !important;
-      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      background: rgba(15, 29, 77, 0.75) !important;
+      border: 1px solid rgba(252, 213, 164, 0.2) !important;
       border-radius: 16px !important;
     }
     .hover-card-lift {
@@ -147,8 +159,8 @@
     }
     .hover-card-lift:hover {
       transform: translateY(-5px) !important;
-      border-color: rgba(212, 175, 55, 0.6) !important;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 25px rgba(212, 175, 55, 0.3) !important;
+      border-color: rgba(252, 213, 164, 0.6) !important;
+      box-shadow: 0 16px 36px rgba(4, 9, 28, 0.8), 0 0 25px rgba(239, 124, 0, 0.25) !important;
     }
     /* Mobile sticky dock: STRICTLY HIDDEN ON DESKTOP */
     @media (min-width: 768px) {
@@ -205,7 +217,7 @@
   </style>
 
   <!-- Custom Styles (Matching https://royalegalaxy.in/) with Cache Busting -->
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261022_v11">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261022_v12">
 </head>
 
 <body>
@@ -213,7 +225,7 @@
   <!-- ========================================================
        STICKY NAVBAR (Exact Royale Galaxy Header Architecture)
        ======================================================== -->
-  <header style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; transition: all 0.3s ease; background: linear-gradient(to bottom, rgba(7, 10, 16, 0.95), rgba(7, 10, 16, 0)); border-bottom: none;">
+  <header style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; transition: all 0.3s ease; background: linear-gradient(to bottom, rgba(10, 20, 58, 0.95), rgba(10, 20, 58, 0)); border-bottom: none;">
     <div class="container" style="display: flex; align-items: center; justify-content: space-between; height: 68px;">
       
       <!-- Brand Logo -->
@@ -271,7 +283,7 @@
     </div>
 
     <!-- Mobile Slide-Down Drawer -->
-    <div id="mobileNavDrawer" class="hidden" style="display: none; background: rgba(7, 10, 16, 0.98); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-gold); padding: 20px; flex-direction: column; gap: 14px; max-height: calc(100vh - 68px); overflow-y: auto;">
+    <div id="mobileNavDrawer" class="hidden" style="display: none; background: rgba(10, 20, 58, 0.98); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-gold); padding: 20px; flex-direction: column; gap: 14px; max-height: calc(100vh - 68px); overflow-y: auto;">
       <a href="#overview" style="color: var(--text-primary); text-decoration: none; font-size: 1rem; font-weight: 600; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">Overview</a>
       <a href="#gallery" style="color: var(--text-primary); text-decoration: none; font-size: 1rem; font-weight: 600; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">3D Gallery</a>
       <a href="#configurations" style="color: var(--text-primary); text-decoration: none; font-size: 1rem; font-weight: 600; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">Residences &amp; Plans</a>
@@ -301,7 +313,7 @@
   <section id="overview" class="hero-section" style="position: relative; min-height: 100vh; padding-top: 90px; padding-bottom: 60px; display: flex; align-items: center; overflow: hidden;">
     
     <!-- Parallax Background Layer -->
-    <div class="hero-bg-layer" style="position: absolute; inset: -20px; background-image: linear-gradient(to bottom, rgba(7, 10, 16, 0.55) 0%, rgba(7, 10, 16, 0.88) 70%, rgba(7, 10, 16, 1) 100%), url('assets/images/tower-vertical.jpg'); background-size: cover; background-position: center; z-index: 0; transition: transform 0.6s ease-out;"></div>
+    <div class="hero-bg-layer" style="position: absolute; inset: -20px; background-image: linear-gradient(to bottom, rgba(10, 20, 58, 0.55) 0%, rgba(10, 20, 58, 0.88) 70%, rgba(10, 20, 58, 1) 100%), url('assets/images/tower-vertical.jpg'); background-size: cover; background-position: center; z-index: 0; transition: transform 0.6s ease-out;"></div>
 
     <!-- Mouse Spotlight Overlay (Desktop) -->
     <div id="heroSpotlight" style="position: absolute; inset: 0; pointer-events: none; z-index: 1; transition: background 0.05s ease-out;"></div>
@@ -336,7 +348,7 @@
         <!-- 4 USPs Grid (Exact Royale Galaxy Layout) -->
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 32px;" class="hero-usps-grid">
           
-          <div class="hover-card-lift glass-card" style="background: rgba(14, 20, 34, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.25); padding: 10px 14px; border-radius: 10px; display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
+          <div class="hover-card-lift glass-card" style="background: rgba(15, 29, 77, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.25); padding: 10px 14px; border-radius: 10px; display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
             <i data-lucide="graduation-cap" class="icon-glow-target" style="width: 16px; height: 16px; color: var(--gold-primary); flex-shrink: 0; margin-top: 2px;"></i>
             <div style="min-width: 0;">
               <div class="title-glow-target" style="color: #FFF; font-weight: 700; font-size: 0.84rem; line-height: 1.3;">01 Min to NES School</div>
@@ -344,7 +356,7 @@
             </div>
           </div>
 
-          <div class="hover-card-lift glass-card" style="background: rgba(14, 20, 34, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.25); padding: 10px 14px; border-radius: 10px; display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
+          <div class="hover-card-lift glass-card" style="background: rgba(15, 29, 77, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.25); padding: 10px 14px; border-radius: 10px; display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
             <i data-lucide="trees" class="icon-glow-target" style="width: 16px; height: 16px; color: var(--gold-primary); flex-shrink: 0; margin-top: 2px;"></i>
             <div style="min-width: 0;">
               <div class="title-glow-target" style="color: #FFF; font-weight: 700; font-size: 0.84rem; line-height: 1.3;">Rooftop Sky Park</div>
@@ -352,7 +364,7 @@
             </div>
           </div>
 
-          <div class="hover-card-lift glass-card" style="background: rgba(14, 20, 34, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.25); padding: 10px 14px; border-radius: 10px; display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
+          <div class="hover-card-lift glass-card" style="background: rgba(15, 29, 77, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.25); padding: 10px 14px; border-radius: 10px; display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
             <i data-lucide="building-2" class="icon-glow-target" style="width: 16px; height: 16px; color: var(--gold-primary); flex-shrink: 0; margin-top: 2px;"></i>
             <div style="min-width: 0;">
               <div class="title-glow-target" style="color: #FFF; font-weight: 700; font-size: 0.84rem; line-height: 1.3;">G+22 Storey Tower</div>
@@ -360,7 +372,7 @@
             </div>
           </div>
 
-          <div class="hover-card-lift glass-card" style="background: rgba(14, 20, 34, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.25); padding: 10px 14px; border-radius: 10px; display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
+          <div class="hover-card-lift glass-card" style="background: rgba(15, 29, 77, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.25); padding: 10px 14px; border-radius: 10px; display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
             <i data-lucide="navigation" class="icon-glow-target" style="width: 16px; height: 16px; color: var(--gold-primary); flex-shrink: 0; margin-top: 2px;"></i>
             <div style="min-width: 0;">
               <div class="title-glow-target" style="color: #FFF; font-weight: 700; font-size: 0.84rem; line-height: 1.3;">Near Kalyan-Shil Rd</div>
@@ -390,7 +402,7 @@
             <span>WhatsApp Enquiry</span>
           </a>
 
-          <a href="tel:+918422861465" class="btn-secondary" style="padding: 12px 20px; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; color: var(--gold-light); background: rgba(14, 20, 34, 0.85); border: 1px solid var(--border-gold);">
+          <a href="tel:+918422861465" class="btn-secondary" style="padding: 12px 20px; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; color: var(--gold-light); background: rgba(15, 29, 77, 0.85); border: 1px solid var(--border-gold);">
             <i data-lucide="phone" style="width: 16px; height: 16px; color: var(--gold-primary);"></i>
             <span style="font-family: var(--font-mono); font-weight: 700; color: #FFF;">84228 61465</span>
           </a>
@@ -492,7 +504,7 @@
               </div>
 
               <!-- Price Box -->
-              <div style="background: rgba(7, 10, 16, 0.7); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 20px;">
+              <div style="background: rgba(10, 20, 58, 0.7); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 20px;">
                 <div style="font-size: 0.75rem; color: var(--text-secondary);">Starting Price</div>
                 <div class="font-display text-gold price-display-wrapper" data-price-target="1bhk" style="font-size: 1.8rem; font-weight: 700; margin-top: 4px;">
                   FROM ₹37 LAKH*
@@ -551,7 +563,7 @@
               </div>
 
               <!-- Price Box -->
-              <div style="background: rgba(7, 10, 16, 0.7); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 20px;">
+              <div style="background: rgba(10, 20, 58, 0.7); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 20px;">
                 <div style="font-size: 0.75rem; color: var(--text-secondary);">Starting Price</div>
                 <div class="font-display text-gold price-display-wrapper" data-price-target="2bhk" style="font-size: 1.8rem; font-weight: 700; margin-top: 4px;">
                   FROM ₹75 LAKH*
@@ -651,7 +663,7 @@
                 <h4 class="font-display" style="color: #FFF; font-size: 1.1rem;">Typical Floor Plan (1st to 21st Floors)</h4>
                 <p style="color: var(--text-secondary); font-size: 0.78rem;">Wing A • 6 Units Per Floor • 2 High-Speed Otis Elevators + Fire Lift</p>
               </div>
-              <div style="background: rgba(7, 10, 16, 0.9); border-radius: var(--radius-sm); overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 400px;">
+              <div style="background: rgba(10, 20, 58, 0.9); border-radius: var(--radius-sm); overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 400px;">
                 <img src="assets/images/floor-plan-typical.jpg" alt="Typical Floor Plan" class="gated-plan-img is-locked" style="max-height: 580px; width: auto; max-width: 100%; object-fit: contain;">
               </div>
             </div>
@@ -661,7 +673,7 @@
                 <h4 class="font-display" style="color: #FFF; font-size: 1.1rem;">1 BHK Residence Unit Layout</h4>
                 <p style="color: var(--text-secondary); font-size: 0.78rem;">Living (10'0" x 15'0") • Bedroom (10'0" x 12'0") • Kitchen (9'2" x 7'0")</p>
               </div>
-              <div style="background: rgba(7, 10, 16, 0.9); border-radius: var(--radius-sm); overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 400px;">
+              <div style="background: rgba(10, 20, 58, 0.9); border-radius: var(--radius-sm); overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 400px;">
                 <img src="assets/images/floor-plan-1bhk.jpg" alt="1 BHK Plan" class="gated-plan-img is-locked" style="max-height: 580px; width: auto; max-width: 100%; object-fit: contain;">
               </div>
             </div>
@@ -671,7 +683,7 @@
                 <h4 class="font-display" style="color: #FFF; font-size: 1.1rem;">2.5 BHK Residence Unit Layout</h4>
                 <p style="color: var(--text-secondary); font-size: 0.78rem;">Master Bedroom with Ensuite Bath • Children's Bedroom • Study Space • Dual Balconies</p>
               </div>
-              <div style="background: rgba(7, 10, 16, 0.9); border-radius: var(--radius-sm); overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 400px;">
+              <div style="background: rgba(10, 20, 58, 0.9); border-radius: var(--radius-sm); overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 400px;">
                 <img src="assets/images/floor-plan-2bhk.jpg" alt="2.5 BHK Plan" class="gated-plan-img is-locked" style="max-height: 580px; width: auto; max-width: 100%; object-fit: contain;">
               </div>
             </div>
@@ -681,7 +693,7 @@
                 <h4 class="font-display" style="color: #FFF; font-size: 1.1rem;">Refuge Floor Plan (8th, 13th &amp; 18th Floors)</h4>
                 <p style="color: var(--text-secondary); font-size: 0.78rem;">Statutory Fire Safety Compliance • Dedicated Open Refuge Decks</p>
               </div>
-              <div style="background: rgba(7, 10, 16, 0.9); border-radius: var(--radius-sm); overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 400px;">
+              <div style="background: rgba(10, 20, 58, 0.9); border-radius: var(--radius-sm); overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 400px;">
                 <img src="assets/images/floor-plan-refuge.jpg" alt="Refuge Floor Plan" class="gated-plan-img is-locked" style="max-height: 580px; width: auto; max-width: 100%; object-fit: contain;">
               </div>
             </div>
@@ -836,7 +848,7 @@
           <div class="glass-card hover-card-lift" style="overflow: hidden;">
             <div style="height: 220px; overflow: hidden; position: relative;">
               <img src="assets/images/night-view.jpg" alt="Night View" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
-              <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(7, 10, 16, 0.9) 0%, transparent 60%);"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 20, 58, 0.9) 0%, transparent 60%);"></div>
               <div style="position: absolute; bottom: 14px; left: 16px;">
                 <div style="color: var(--gold-primary); font-size: 0.72rem; font-weight: 700; text-transform: uppercase;">Tower Elevation</div>
                 <h4 class="font-display" style="color: #FFF; font-size: 1.1rem; margin-top: 2px;">Stunning Night Panorama</h4>
@@ -847,7 +859,7 @@
           <div class="glass-card hover-card-lift" style="overflow: hidden;">
             <div style="height: 220px; overflow: hidden; position: relative;">
               <img src="assets/images/aerial-view.jpg" alt="Aerial Master Layout" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
-              <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(7, 10, 16, 0.9) 0%, transparent 60%);"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 20, 58, 0.9) 0%, transparent 60%);"></div>
               <div style="position: absolute; bottom: 14px; left: 16px;">
                 <div style="color: var(--gold-primary); font-size: 0.72rem; font-weight: 700; text-transform: uppercase;">Master Layout</div>
                 <h4 class="font-display" style="color: #FFF; font-size: 1.1rem; margin-top: 2px;">Aerial View &amp; Campus</h4>
@@ -858,7 +870,7 @@
           <div class="glass-card hover-card-lift" style="overflow: hidden;">
             <div style="height: 220px; overflow: hidden; position: relative;">
               <img src="assets/images/grand-lobby.jpg" alt="Designer Double Height Lobby" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
-              <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(7, 10, 16, 0.9) 0%, transparent 60%);"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 20, 58, 0.9) 0%, transparent 60%);"></div>
               <div style="position: absolute; bottom: 14px; left: 16px;">
                 <div style="color: var(--gold-primary); font-size: 0.72rem; font-weight: 700; text-transform: uppercase;">Arrival Experience</div>
                 <h4 class="font-display" style="color: #FFF; font-size: 1.1rem; margin-top: 2px;">Designer Wing A Lobby</h4>
@@ -869,7 +881,7 @@
           <div class="glass-card hover-card-lift" style="overflow: hidden;">
             <div style="height: 220px; overflow: hidden; position: relative;">
               <img src="assets/images/clubhouse.jpg" alt="Clubhouse" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
-              <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(7, 10, 16, 0.9) 0%, transparent 60%);"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 20, 58, 0.9) 0%, transparent 60%);"></div>
               <div style="position: absolute; bottom: 14px; left: 16px;">
                 <div style="color: var(--gold-primary); font-size: 0.72rem; font-weight: 700; text-transform: uppercase;">Social Luxury</div>
                 <h4 class="font-display" style="color: #FFF; font-size: 1.1rem; margin-top: 2px;">The Club &amp; Community Lounge</h4>
@@ -880,7 +892,7 @@
           <div class="glass-card hover-card-lift" style="overflow: hidden;">
             <div style="height: 220px; overflow: hidden; position: relative;">
               <img src="assets/images/cricket-turf.jpg" alt="Cricket Turf" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
-              <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(7, 10, 16, 0.9) 0%, transparent 60%);"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 20, 58, 0.9) 0%, transparent 60%);"></div>
               <div style="position: absolute; bottom: 14px; left: 16px;">
                 <div style="color: var(--gold-primary); font-size: 0.72rem; font-weight: 700; text-transform: uppercase;">Sports Arena</div>
                 <h4 class="font-display" style="color: #FFF; font-size: 1.1rem; margin-top: 2px;">Floodlit Box Cricket Turf</h4>
@@ -891,7 +903,7 @@
           <div class="glass-card hover-card-lift" style="overflow: hidden;">
             <div style="height: 220px; overflow: hidden; position: relative;">
               <img src="assets/images/terrace-garden.jpg" alt="Terrace Garden" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;">
-              <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(7, 10, 16, 0.9) 0%, transparent 60%);"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 20, 58, 0.9) 0%, transparent 60%);"></div>
               <div style="position: absolute; bottom: 14px; left: 16px;">
                 <div style="color: var(--gold-primary); font-size: 0.72rem; font-weight: 700; text-transform: uppercase;">Skyline Relaxation</div>
                 <h4 class="font-display" style="color: #FFF; font-size: 1.1rem; margin-top: 2px;">Rooftop Sky Deck</h4>
@@ -1037,7 +1049,7 @@
           <!-- Location Map Visual -->
           <div class="glass-card" style="padding: 16px; overflow: hidden;">
             <img src="assets/images/location-map.jpg" alt="Location Map" style="width: 100%; height: auto; border-radius: var(--radius-sm); object-fit: cover;">
-            <div style="margin-top: 14px; padding: 12px; background: rgba(7, 10, 16, 0.8); border-radius: var(--radius-sm);">
+            <div style="margin-top: 14px; padding: 12px; background: rgba(10, 20, 58, 0.8); border-radius: var(--radius-sm);">
               <div style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 700; color: #FFF;">
                 <i data-lucide="map-pin" style="width: 16px; height: 16px; color: var(--gold-primary);"></i>
                 <span>Site Address</span>
@@ -1186,7 +1198,7 @@
   <!-- ========================================================
        MOBILE STICKY BOTTOM BAR (Screens <= 767px)
        ======================================================== -->
-  <div class="mobile-sticky-bar" style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: rgba(7, 10, 16, 0.96); backdrop-filter: blur(16px); border-top: 1px solid var(--border-gold); padding: 10px 14px; gap: 10px; justify-content: center; box-shadow: 0 -8px 24px rgba(0,0,0,0.8);">
+  <div class="mobile-sticky-bar" style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: rgba(10, 20, 58, 0.96); backdrop-filter: blur(16px); border-top: 1px solid var(--border-gold); padding: 10px 14px; gap: 10px; justify-content: center; box-shadow: 0 -8px 24px rgba(0,0,0,0.8);">
     <a href="tel:+918422861465" class="btn-outline-gold" style="flex: 1; padding: 9px 10px; font-size: 0.82rem; justify-content: center;">
       <i data-lucide="phone" style="width: 14px; height: 14px;"></i> Call Sales
     </a>
@@ -1199,7 +1211,7 @@
        LEAD CAPTURE MODAL (STRICTLY NO EMAIL)
        ======================================================== -->
   <div id="leadModal" class="modal-container hidden" style="position: fixed; inset: 0; z-index: 2000; display: none;">
-    <div class="modal-backdrop" style="position: absolute; inset: 0; background: rgba(4, 6, 10, 0.85); backdrop-filter: blur(12px);"></div>
+    <div class="modal-backdrop" style="position: absolute; inset: 0; background: rgba(4, 8, 24, 0.85); backdrop-filter: blur(12px);"></div>
 
     <div class="app-modal-sheet glass-card" style="position: relative; z-index: 10; width: 100%; max-width: 440px; border: 1px solid var(--border-gold-bright); padding: 26px; border-radius: var(--radius-lg); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9);">
       <div class="app-sheet-handle sm:hidden"></div>
@@ -1219,7 +1231,7 @@
 
         <div>
           <label style="display: block; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px;">Full Name</label>
-          <input type="text" name="fullName" required placeholder="Enter your full name" style="width: 100%; background: rgba(7, 10, 16, 0.8); border: 1px solid var(--border-gold); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 0.88rem; color: #FFF; outline: none;">
+          <input type="text" name="fullName" required placeholder="Enter your full name" style="width: 100%; background: rgba(10, 20, 58, 0.8); border: 1px solid var(--border-gold); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 0.88rem; color: #FFF; outline: none;">
         </div>
 
         <div class="phone-field-wrapper">
@@ -1235,7 +1247,7 @@
 
         <div>
           <label style="display: block; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px;">Select Configuration</label>
-          <select name="configuration" style="width: 100%; background: rgba(7, 10, 16, 0.95); border: 1px solid var(--border-gold); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 0.85rem; color: #FFF; outline: none;">
+          <select name="configuration" style="width: 100%; background: rgba(10, 20, 58, 0.95); border: 1px solid var(--border-gold); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 0.85rem; color: #FFF; outline: none;">
             <option value="1 BHK Residence">1 BHK Residence (₹ 37 Lakhs*)</option>
             <option value="2.5 BHK Residence">2.5 BHK Residence (₹ 75 Lakhs*)</option>
             <option value="Both 1 & 2.5 BHK">Both 1 &amp; 2.5 BHK Options</option>
@@ -1250,7 +1262,7 @@
             <button type="button" class="date-chip" data-date-offset="saturday">Saturday</button>
             <button type="button" class="date-chip" data-date-offset="sunday">Sunday</button>
           </div>
-          <input type="date" id="modalVisitDate" name="visitDate" style="width: 100%; background: rgba(7, 10, 16, 0.8); border: 1px solid var(--border-gold); border-radius: var(--radius-sm); padding: 8px 12px; font-size: 0.82rem; color: #FFF; outline: none;">
+          <input type="date" id="modalVisitDate" name="visitDate" style="width: 100%; background: rgba(10, 20, 58, 0.8); border: 1px solid var(--border-gold); border-radius: var(--radius-sm); padding: 8px 12px; font-size: 0.82rem; color: #FFF; outline: none;">
         </div>
 
         <button type="submit" class="btn-gold" style="width: 100%; padding: 12px; margin-top: 6px;">
@@ -1269,7 +1281,7 @@
        SUCCESS MODAL
        ======================================================== -->
   <div id="leadSuccessModal" class="modal-container hidden" style="position: fixed; inset: 0; z-index: 2000; display: none;">
-    <div class="modal-backdrop" style="position: absolute; inset: 0; background: rgba(4, 6, 10, 0.85); backdrop-filter: blur(12px);"></div>
+    <div class="modal-backdrop" style="position: absolute; inset: 0; background: rgba(4, 8, 24, 0.85); backdrop-filter: blur(12px);"></div>
 
     <div class="app-modal-sheet glass-card" style="position: relative; z-index: 10; width: 100%; max-width: 440px; border: 1.5px solid #34d399; padding: 28px; border-radius: var(--radius-lg); text-align: center; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9);">
       <div class="app-sheet-handle sm:hidden"></div>
@@ -1287,7 +1299,7 @@
         Your inquiry for <strong>Codename Majha Ghar</strong> has been received. Pricing &amp; floor plans are unlocked!
       </p>
 
-      <div style="margin: 20px 0; padding: 14px; background: rgba(7, 10, 16, 0.8); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); text-align: left;">
+      <div style="margin: 20px 0; padding: 14px; background: rgba(10, 20, 58, 0.8); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); text-align: left;">
         <div style="display: flex; align-items: center; gap: 6px; color: #34d399; font-weight: 700; font-size: 0.82rem;">
           <i data-lucide="shield-check" style="width: 16px; height: 16px;"></i> Content Unlocked
         </div>
@@ -1303,7 +1315,7 @@
   </div>
 
   <!-- Scripts -->
-  <script src="assets/js/main.js?v=20261022_v9"></script>
+  <script src="assets/js/main.js?v=20261022_v12"></script>
   <script>
     lucide.createIcons();
   </script>
