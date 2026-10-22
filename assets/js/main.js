@@ -13,10 +13,10 @@ const PROJECT_CONFIG = {
   formattedPhone: "+91 84228 61465",
   reraNo: "P51700078323",
   pricing: {
-    bhk1_masked: "₹ 3X.XX Lakhs*",
-    bhk1_actual: "₹ 38.99 Lakhs* All-Inclusive",
-    bhk2_masked: "₹ 5X.XX Lakhs*",
-    bhk2_actual: "₹ 56.50 Lakhs* All-Inclusive"
+    bhk1_masked: "FROM ₹ 37 LAKH*",
+    bhk1_actual: "₹ 37 Lakhs* All-Inclusive",
+    bhk2_masked: "FROM ₹ 75 LAKH*",
+    bhk2_actual: "₹ 75 Lakhs* All-Inclusive"
   }
 };
 
@@ -56,7 +56,7 @@ function applyUnlockedState() {
     el.innerHTML = `<span style="color: #34d399; font-weight: 700;">${PROJECT_CONFIG.pricing.bhk1_actual}</span>`;
   });
 
-  // Reveal 2 BHK price
+  // Reveal 2.5 BHK price
   document.querySelectorAll("[data-price-target='2bhk']").forEach((el) => {
     el.innerHTML = `<span style="color: #34d399; font-weight: 700;">${PROJECT_CONFIG.pricing.bhk2_actual}</span>`;
   });
@@ -463,7 +463,7 @@ function initFormSubmissions() {
       }
       if (errorEl) errorEl.classList.remove("visible");
 
-      const config = configInput ? configInput.value : "1 BHK / 2 BHK";
+      const config = configInput ? configInput.value : "1 BHK / 2.5 BHK";
       const visitDate = dateInput ? dateInput.value : "Immediate Visit";
       const timestamp = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
 
