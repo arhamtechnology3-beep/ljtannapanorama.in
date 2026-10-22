@@ -13,8 +13,8 @@ const PROJECT_CONFIG = {
   formattedPhone: "+91 84228 61465",
   reraNo: "P51700078323",
   pricing: {
-    bhk1_masked: "from ₹37 lakh*",
-    bhk1_actual: "from ₹37 lakh*",
+    bhk1_masked: "₹ 3X.XX Lakhs*",
+    bhk1_actual: "₹ 38.99 Lakhs* All-Inclusive",
     bhk2_masked: "₹ 5X.XX Lakhs*",
     bhk2_actual: "₹ 56.50 Lakhs* All-Inclusive"
   }
@@ -25,10 +25,12 @@ document.addEventListener("DOMContentLoaded", () => {
   initPhoneSanitization();
   initDateChips();
   initAnimatedCounters();
-  initMobilePillsScrollspy();
   initModals();
   initFormSubmissions();
   initFloorPlanTabs();
+  initHeroParallax();
+  initNavbarScroll();
+  initMobileDrawer();
 });
 
 /* ========================================================
@@ -51,19 +53,19 @@ function applyUnlockedState() {
 
   // Reveal 1 BHK price
   document.querySelectorAll("[data-price-target='1bhk']").forEach((el) => {
-    el.innerHTML = `<span class="text-emerald-400 font-bold">${PROJECT_CONFIG.pricing.bhk1_actual}</span>`;
+    el.innerHTML = `<span style="color: #34d399; font-weight: 700;">${PROJECT_CONFIG.pricing.bhk1_actual}</span>`;
   });
 
   // Reveal 2 BHK price
   document.querySelectorAll("[data-price-target='2bhk']").forEach((el) => {
-    el.innerHTML = `<span class="text-emerald-400 font-bold">${PROJECT_CONFIG.pricing.bhk2_actual}</span>`;
+    el.innerHTML = `<span style="color: #34d399; font-weight: 700;">${PROJECT_CONFIG.pricing.bhk2_actual}</span>`;
   });
 
   // Update lock badges
   document.querySelectorAll(".gating-badge").forEach((el) => {
     el.innerHTML = `
-      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+      <span style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; background: rgba(52, 211, 153, 0.15); border: 1px solid rgba(52, 211, 153, 0.4); color: #34d399;">
+        <svg style="width: 12px; height: 12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
         Price & Plans Unlocked
       </span>
     `;
@@ -201,7 +203,6 @@ function formatDateToYYYYMMDD(d) {
 }
 
 function initDateChips() {
-  // Set minimum date to today for all date inputs
   const todayStr = formatDateToYYYYMMDD(new Date());
   document.querySelectorAll("input[type='date']").forEach((inp) => {
     inp.min = todayStr;
@@ -244,38 +245,90 @@ function initDateChips() {
 }
 
 /* ========================================================
-   5. MOBILE PILLS BAR SCROLLSPY
+   5. ROYALE GALAXY PARALLAX & CURSOR GLOW
    ======================================================== */
-function initMobilePillsScrollspy() {
-  const pills = document.querySelectorAll(".app-pill");
-  const sections = [];
+function initHeroParallax() {
+  const hero = document.getElementById("overview");
+  const bgLayer = document.querySelector(".hero-bg-layer");
+  const spotlight = document.getElementById("heroSpotlight");
+  const cursorDot = document.getElementById("heroCursorDot");
 
-  pills.forEach((pill) => {
-    const hash = pill.getAttribute("href");
-    if (hash && hash.startsWith("#")) {
-      const el = document.querySelector(hash);
-      if (el) sections.push({ pill, section: el });
-    }
-  });
+  if (!hero || !bgLayer) return;
 
-  window.addEventListener("scroll", () => {
-    const scrollPos = window.scrollY + 120;
-    sections.forEach(({ pill, section }) => {
-      const top = section.offsetTop;
-      const height = section.offsetHeight;
-      if (scrollPos >= top && scrollPos < top + height) {
-        pills.forEach((p) => p.classList.remove("active"));
-        pill.classList.add("active");
+  if (window.innerWidth > 1024) {
+    hero.addEventListener("mousemove", (e) => {
+      const rect = hero.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const shiftX = (x / hero.clientWidth - 0.5) * -16;
+      const shiftY = (y / hero.clientHeight - 0.5) * -16;
+
+      bgLayer.style.transform = `translate3d(${shiftX}px, ${shiftY}px, 0) scale(1.04)`;
+
+      if (spotlight) {
+        spotlight.style.background = `radial-gradient(550px circle at ${x}px ${y}px, rgba(212, 175, 55, 0.22) 0%, rgba(212, 175, 55, 0.06) 45%, transparent 75%)`;
+      }
+      if (cursorDot) {
+        cursorDot.style.display = "block";
+        cursorDot.style.left = `${x}px`;
+        cursorDot.style.top = `${y}px`;
       }
     });
+
+    hero.addEventListener("mouseleave", () => {
+      bgLayer.style.transform = "scale(1)";
+      if (spotlight) spotlight.style.background = "transparent";
+      if (cursorDot) cursorDot.style.display = "none";
+    });
+  }
+}
+
+/* ========================================================
+   6. NAVBAR SCROLL BLUR & BORDER (Royale Galaxy)
+   ======================================================== */
+function initNavbarScroll() {
+  const header = document.querySelector("header");
+  if (!header) return;
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 30) {
+      header.style.background = "rgba(7, 10, 16, 0.95)";
+      header.style.backdropFilter = "blur(16px)";
+      header.style.borderBottom = "1px solid rgba(212, 175, 55, 0.2)";
+      header.style.boxShadow = "0 8px 25px rgba(0, 0, 0, 0.7)";
+    } else {
+      header.style.background = "linear-gradient(to bottom, rgba(7, 10, 16, 0.95), rgba(7, 10, 16, 0))";
+      header.style.backdropFilter = "none";
+      header.style.borderBottom = "none";
+      header.style.boxShadow = "none";
+    }
   }, { passive: true });
 }
 
 /* ========================================================
-   6. MODAL & BOTTOM SHEET ENGINE
+   7. MOBILE NAVIGATION DRAWER
+   ======================================================== */
+function initMobileDrawer() {
+  const toggleBtn = document.getElementById("mobileNavToggle");
+  const drawer = document.getElementById("mobileNavDrawer");
+  if (!toggleBtn || !drawer) return;
+
+  toggleBtn.addEventListener("click", () => {
+    drawer.classList.toggle("hidden");
+  });
+
+  drawer.querySelectorAll("a, button").forEach((item) => {
+    item.addEventListener("click", () => {
+      drawer.classList.add("hidden");
+    });
+  });
+}
+
+/* ========================================================
+   8. MODAL & BOTTOM SHEET ENGINE
    ======================================================== */
 function initModals() {
-  // Triggers
+  // Open triggers
   document.querySelectorAll("[data-open-modal]").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
@@ -320,6 +373,7 @@ function openModal(modalId, title, config) {
   }
 
   modal.classList.remove("hidden");
+  modal.style.display = "flex";
   document.body.style.overflow = "hidden";
 
   // Mobile bottom sheet animation
@@ -336,12 +390,13 @@ function closeAllModals() {
     const sheet = m.querySelector(".app-modal-sheet");
     if (sheet) sheet.classList.remove("sheet-open");
     m.classList.add("hidden");
+    m.style.display = "none";
   });
   document.body.style.overflow = "";
 }
 
 /* ========================================================
-   7. FLOOR PLAN TABS
+   9. FLOOR PLAN TABS
    ======================================================== */
 function initFloorPlanTabs() {
   const tabs = document.querySelectorAll(".plan-tab-btn");
@@ -350,18 +405,18 @@ function initFloorPlanTabs() {
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
       tabs.forEach((t) => {
-        t.classList.remove("active", "bg-amber-500", "text-slate-900", "border-amber-500");
-        t.classList.add("bg-slate-800/60", "text-slate-300", "border-slate-700");
+        t.classList.remove("active", "btn-gold");
+        t.classList.add("btn-secondary");
       });
-      tab.classList.remove("bg-slate-800/60", "text-slate-300", "border-slate-700");
-      tab.classList.add("active", "bg-amber-500", "text-slate-900", "border-amber-500");
+      tab.classList.remove("btn-secondary");
+      tab.classList.add("active", "btn-gold");
 
       const targetPaneId = tab.getAttribute("data-tab-target");
       panes.forEach((pane) => {
         if (pane.id === targetPaneId) {
-          pane.classList.remove("hidden");
+          pane.style.display = "block";
         } else {
-          pane.classList.add("hidden");
+          pane.style.display = "none";
         }
       });
     });
@@ -369,7 +424,7 @@ function initFloorPlanTabs() {
 }
 
 /* ========================================================
-   8. LEAD CAPTURE & WHATSAPP ROUTING (STRICTLY NO EMAIL)
+   10. LEAD CAPTURE & WHATSAPP ROUTING (STRICTLY NO EMAIL)
    ======================================================== */
 function initFormSubmissions() {
   document.querySelectorAll("form.lead-capture-form").forEach((form) => {
@@ -380,7 +435,6 @@ function initFormSubmissions() {
       const phoneInput = form.querySelector(".phone-input");
       const configInput = form.querySelector("select[name='configuration']") || form.querySelector("input[name='configuration']");
       const dateInput = form.querySelector("input[name='visitDate']");
-      const cabInput = form.querySelector("input[name='needCab']:checked");
       const formSource = form.getAttribute("data-source") || "Website Enquiry";
 
       const name = nameInput ? nameInput.value.trim() : "Valued Customer";
@@ -399,8 +453,7 @@ function initFormSubmissions() {
       if (errorEl) errorEl.classList.remove("visible");
 
       const config = configInput ? configInput.value : "1 BHK / 2 BHK";
-      const visitDate = dateInput && dateInput.value ? dateInput.value : null;
-      const needCab = cabInput ? (cabInput.value === "yes" ? "Yes (Free AC Cab Requested)" : "No") : null;
+      const visitDate = dateInput ? dateInput.value : "Immediate Visit";
       const timestamp = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
 
       // Save Lead Dossier to localStorage (strictly no email)
@@ -408,8 +461,7 @@ function initFormSubmissions() {
         name,
         phone,
         configuration: config,
-        visitDate: visitDate || "Brochure request",
-        needCab: needCab || "N/A",
+        visitDate,
         source: formSource,
         timestamp,
         project: PROJECT_CONFIG.name,
@@ -430,23 +482,17 @@ function initFormSubmissions() {
       // Close open lead modals
       closeAllModals();
 
-      // Build WhatsApp message (brochure-first; visit fields only when present)
-      let waMessage =
+      // Build WhatsApp message
+      const waMessage = 
 `*New Enquiry - ${PROJECT_CONFIG.name}*
 👤 Name: ${name}
 📞 Mobile: +91 ${phone}
 🏠 Configuration: ${config}
+📅 Preferred Visit Date: ${visitDate}
 📍 Source: ${formSource}
-⏰ Time: ${timestamp} IST`;
+⏰ Time: ${timestamp} IST
 
-      if (visitDate) {
-        waMessage += `\n📅 Preferred Visit Date: ${visitDate}`;
-      }
-      if (needCab) {
-        waMessage += `\n🚗 Free Cab Facility: ${needCab}`;
-      }
-
-      waMessage += `\n\nPlease send me the project brochure and near-possession pricing details.`;
+Please send me the project brochure, price breakdown & arrange my site visit.`;
 
       const waUrl = `https://wa.me/91${PROJECT_CONFIG.hotlinePhone}?text=${encodeURIComponent(waMessage)}`;
 
@@ -459,7 +505,6 @@ function initFormSubmissions() {
 function showSuccessModal(name, phone, waUrl) {
   const successModal = document.getElementById("leadSuccessModal");
   if (!successModal) {
-    // If modal element not found, redirect directly
     window.open(waUrl, "_blank");
     return;
   }
@@ -473,6 +518,7 @@ function showSuccessModal(name, phone, waUrl) {
   }
 
   successModal.classList.remove("hidden");
+  successModal.style.display = "flex";
   document.body.style.overflow = "hidden";
 
   const sheet = successModal.querySelector(".app-modal-sheet");
