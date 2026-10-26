@@ -50,14 +50,33 @@ A high-converting real estate web portal engineered for **Codename Majha Ghar** 
 ├── favicon-32x32.png            # 32x32 Favicon
 ├── apple-touch-icon.png         # 180x180 iOS Touch Icon
 ├── favicon.ico                  # Standard ICO Favicon
+├── integrations/
+│   └── google-apps-script/
+│       └── Code.gs              # Google Sheet Lead Ingestion Webhook (Spreadsheet ID: 1LCGztDOS6utQ3ngKfnYicR3vJfao1pyUyVmrkjGuK3c)
 ├── assets/
 │   ├── css/
 │   │   └── styles.css           # Brochure styling, mobile dock, gating & sheets
 │   ├── js/
-│   │   └── main.js              # Gating logic, Indian phone validator & WhatsApp routing
+│   │   └── main.js              # Gating logic, Indian phone validator, Google Sheets sync & WhatsApp routing
 │   └── images/                  # Web-optimized 3D renders, floor plans & brand logos
 └── README.md
 ```
+
+---
+
+## 📊 Google Sheets Lead Integration
+
+The website captures verified 10-digit Indian mobile numbers and automatically synchronizes them into your designated Google Sheet:
+👉 [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1LCGztDOS6utQ3ngKfnYicR3vJfao1pyUyVmrkjGuK3c/edit?gid=0#gid=0)
+
+### 60-Second Setup:
+1. Open your Google Sheet.
+2. Go to **Extensions > Apps Script**.
+3. Copy & paste the code from [`integrations/google-apps-script/Code.gs`](file:///Users/apple/Documents/Arham%20Technology/Mazha%20Ghar%20Real%20estate/integrations/google-apps-script/Code.gs).
+4. Click **Deploy > New deployment**.
+5. Set Type: **Web app**, Execute as: **Me**, Who has access: **Anyone**.
+6. Copy the generated Web app URL and paste it into `PROJECT_CONFIG.googleSheetWebhookUrl` in `assets/js/main.js`.
+7. Future website form submissions will instantly append into the Sheet in real-time.
 
 ---
 

@@ -12,6 +12,8 @@ const PROJECT_CONFIG = {
   hotlinePhone: "8422861465",
   formattedPhone: "+91 84228 61465",
   reraNo: "P51700078323",
+  googleSheetId: "1LCGztDOS6utQ3ngKfnYicR3vJfao1pyUyVmrkjGuK3c",
+  googleSheetWebhookUrl: "", // Deploy integrations/google-apps-script/Code.gs to activate live Sheet syncing
   pricing: {
     bhk1_masked: "FROM ₹ 37 LAKH*",
     bhk1_actual: "₹ 37 Lakhs* All-Inclusive",
@@ -377,6 +379,8 @@ function openModal(modalId, title, config) {
   if (title) {
     const titleEl = modal.querySelector(".modal-title-text");
     if (titleEl) titleEl.textContent = title;
+    const form = modal.querySelector("form");
+    if (form) form.setAttribute("data-source", title);
   }
   if (config) {
     const configInput = modal.querySelector("input[name='configuration']");
@@ -479,6 +483,9 @@ function initFormSubmissions() {
         destinationPhone: PROJECT_CONFIG.hotlinePhone
       };
 
+      // Asynchronously synchronize lead directly to Google Sheet
+      submitLeadToGoogleSheet(leadDossier);
+
       try {
         const existingLeads = JSON.parse(localStorage.getItem("majha_ghar_leads") || "[]");
         existingLeads.push(leadDossier);
@@ -537,5 +544,48 @@ function showSuccessModal(name, phone, waUrl) {
     requestAnimationFrame(() => {
       sheet.classList.add("sheet-open");
     });
+  }
+}
+
+/* ========================================================
+   11. GOOGLE SHEET ASYNC WEBHOOK SYNC
+   ======================================================== */
+async function submitLeadToGoogleSheet(leadDossier) {
+  const webhookUrl = PROJECT_CONFIG.googleSheetWebhookUrl;
+  if (!webhookUrl || webhookUrl.trim() === "" || webhookUrl.includes("REPLACE_WITH")) {
+    console.info("Google Sheet Webhook URL awaiting deployment. Lead saved locally & WhatsApp queued.");
+    return false;
+  }
+
+  const payload = {
+    ...leadDossier,
+    pageUrl: window.location.href,
+    userAgent: navigator.userAgent
+  };
+
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 6000);
+
+    await fetch(webhookUrl, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+    console.info("Lead synced to Google Sheet:", leadDossier.name);
+    return true;
+  } catch (err) {
+    if (err && err.name === "AbortError") {
+      console.warn("Google Sheet sync timeout (dispatched).");
+      return true;
+    }
+    console.error("Google Sheet synchronization error:", err);
+    return false;
   }
 }
