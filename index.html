@@ -211,10 +211,46 @@
     .modal-container:not(.hidden) {
       display: flex !important;
     }
+    @media (max-width: 767px) {
+      .hero-desktop-only {
+        display: none !important;
+      }
+      .hero-section {
+        padding-top: 80px !important;
+        padding-bottom: 30px !important;
+        min-height: auto !important;
+      }
+      .hero-cta-group {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 10px !important;
+      }
+      .hero-cta-group .btn-gold,
+      .hero-cta-group .btn-outline-gold {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 12px 16px !important;
+      }
+      .hero-usps-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+        margin-bottom: 20px !important;
+      }
+      .hero-usps-grid .glass-card {
+        padding: 8px 10px !important;
+        gap: 8px !important;
+      }
+      .hero-usps-grid .title-glow-target {
+        font-size: 0.76rem !important;
+      }
+      .hero-usps-grid div[style*="font-size: 0.72rem"] {
+        font-size: 0.65rem !important;
+      }
+    }
   </style>
 
   <!-- Custom Styles (Matching https://royalegalaxy.in/) with Cache Busting -->
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261022_v13">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261026_v1">
 </head>
 
 <body>
@@ -311,28 +347,27 @@
     <div class="container" style="position: relative; z-index: 2; width: 100%;">
       <div style="max-width: 850px; margin: 0 auto;">
         
-        <!-- Top Badge & Logo Row -->
-        <div style="margin-bottom: 20px; display: flex; align-items: center; flex-wrap: wrap; gap: 16px;">
-          <img src="assets/images/majha_ghar_logo_clean.png" alt="Codename Majha Ghar - LJ Tanna Panorama" style="height: 44px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));">
-          <div class="badge-gold pulse-animation" style="padding: 6px 12px; font-size: clamp(0.68rem, 2.5vw, 0.8rem); display: inline-flex; align-items: center; gap: 6px;">
+        <!-- Top MahaRERA Badge -->
+        <div style="margin-bottom: 18px; display: flex; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div class="badge-gold pulse-animation" style="padding: 6px 14px; font-size: clamp(0.7rem, 2.5vw, 0.82rem); display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);">
             <i data-lucide="shield-check" style="width: 14px; height: 14px; flex-shrink: 0;"></i>
             <span>MAHARERA REGISTERED: P51700078323</span>
           </div>
         </div>
 
         <!-- Main Heading (Royale Galaxy Typography) -->
-        <h1 class="font-display text-gold" style="font-size: clamp(2rem, 5.2vw, 4.2rem); font-weight: 800; line-height: 1.15; margin-bottom: 16px; letter-spacing: 0.5px; text-transform: uppercase;">
+        <h1 class="font-display text-gold" style="font-size: clamp(1.75rem, 5vw, 4.2rem); font-weight: 800; line-height: 1.2; margin-bottom: 16px; letter-spacing: 0.5px; text-transform: uppercase;">
           CODENAME MAJHA GHAR
-          <span class="font-serif" style="display: block; font-style: italic; font-weight: 500; font-size: clamp(1.2rem, 3vw, 2.1rem); color: var(--gold-light); margin-top: 8px; text-transform: none; letter-spacing: normal; -webkit-text-fill-color: initial;">Where Every Moment is a Masterpiece</span>
+          <span class="font-serif" style="display: block; font-style: italic; font-weight: 500; font-size: clamp(1.15rem, 3vw, 2.1rem); color: var(--gold-light); margin-top: 8px; text-transform: none; letter-spacing: normal; -webkit-text-fill-color: initial;">Where Every Moment is a Masterpiece</span>
         </h1>
 
         <!-- Subtitle Paragraph -->
-        <p style="font-size: clamp(0.9rem, 2vw, 1.2rem); color: var(--text-secondary); max-width: 680px; margin-bottom: 28px; line-height: 1.6;">
+        <p style="font-size: clamp(0.9rem, 2vw, 1.2rem); color: var(--text-secondary); max-width: 680px; margin-bottom: 24px; line-height: 1.6;">
           A landmark residential tower by <strong style="color: #FFF;">LJ Tanna Realty</strong> in Dombivli East. Presenting luxury <strong style="color: var(--gold-light);">1 &amp; 2.5 BHK Balcony Homes</strong> with Sky Terrace Amenities, Grand Entrance Lobby, and seamless city access.
         </p>
 
         <!-- 4 USPs Grid (Exact Royale Galaxy Layout) -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 32px;" class="hero-usps-grid">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 28px;" class="hero-usps-grid">
           
           <div class="hover-card-lift glass-card" style="background: rgba(15, 29, 77, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.25); padding: 10px 14px; border-radius: 10px; display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
             <i data-lucide="graduation-cap" class="icon-glow-target" style="width: 16px; height: 16px; color: var(--gold-primary); flex-shrink: 0; margin-top: 2px;"></i>
@@ -369,7 +404,7 @@
         </div>
 
         <!-- Action CTAs Row -->
-        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
+        <div class="hero-cta-group" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
           <button data-open-modal="leadModal" data-modal-title="Download Instant Brochure" class="btn-gold" style="padding: 13px 26px; font-size: 0.92rem;">
             <i data-lucide="download" style="width: 16px; height: 16px;"></i>
             <span>Download Instant Brochure</span>
@@ -380,7 +415,7 @@
             <span>Schedule VIP Site Visit</span>
           </button>
 
-          <a href="https://wa.me/918422861465?text=Hi%2C%20I%20am%20interested%20in%20Codename%20Majha%20Ghar%20Dombivli%20East.%20Please%20share%20the%20brochure%20and%20pricing." target="_blank" rel="noopener" style="padding: 12px 20px; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #25D366, #128C7E); color: #FFF; font-weight: 700; border-radius: 8px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35); transition: all 0.3s ease;">
+          <a href="https://wa.me/918422861465?text=Hi%2C%20I%20am%20interested%20in%20Codename%20Majha%20Ghar%20Dombivli%20East.%20Please%20share%20the%20brochure%20and%20pricing." target="_blank" rel="noopener" class="hero-desktop-only" style="padding: 12px 20px; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #25D366, #128C7E); color: #FFF; font-weight: 700; border-radius: 8px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35); transition: all 0.3s ease;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.586 1.831.956 2.796.957 3.18 0 5.767-2.587 5.768-5.766 0-3.181-2.587-5.768-5.768-5.768zm3.364 8.167c-.14.394-.789.756-1.096.799-.297.042-.68.06-1.085-.072-.257-.084-.58-.2-1.002-.383-1.765-.765-2.909-2.55-2.997-2.668-.088-.119-.719-.956-.719-1.821 0-.865.454-1.291.616-1.468.161-.177.352-.222.47-.222.118 0 .235.001.338.006.109.005.255-.041.398.303.148.356.505 1.233.549 1.322.044.089.073.193.015.311-.059.119-.088.193-.176.297-.089.104-.187.233-.267.313-.089.089-.182.186-.078.365.104.178.461.76 1.002 1.242.697.621 1.285.814 1.468.903.183.089.292.074.401-.052.109-.126.468-.546.593-.733.125-.187.25-.156.421-.093.171.063 1.086.512 1.273.606.187.094.312.14.358.219.047.078.047.453-.093.847z"/>
               <path d="M12 2a10 10 0 0 0-8.485 15.318L2 22l4.808-1.262A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.086-1.121l-.293-.174-2.857.75.763-2.787-.19-.302A8 8 0 1 1 12 20z"/>
@@ -388,7 +423,7 @@
             <span>WhatsApp Enquiry</span>
           </a>
 
-          <a href="tel:+918422861465" class="btn-secondary" style="padding: 12px 20px; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; color: var(--gold-light); background: rgba(15, 29, 77, 0.85); border: 1px solid var(--border-gold);">
+          <a href="tel:+918422861465" class="btn-secondary hero-desktop-only" style="padding: 12px 20px; font-size: 0.9rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; color: var(--gold-light); background: rgba(15, 29, 77, 0.85); border: 1px solid var(--border-gold);">
             <i data-lucide="phone" style="width: 16px; height: 16px; color: var(--gold-primary);"></i>
             <span style="font-family: var(--font-mono); font-weight: 700; color: #FFF;">84228 61465</span>
           </a>
