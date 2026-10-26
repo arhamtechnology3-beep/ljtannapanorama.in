@@ -13,7 +13,7 @@ const PROJECT_CONFIG = {
   formattedPhone: "+91 84228 61465",
   reraNo: "P51700078323",
   googleSheetId: "1LCGztDOS6utQ3ngKfnYicR3vJfao1pyUyVmrkjGuK3c",
-  googleSheetWebhookUrl: "", // Deploy integrations/google-apps-script/Code.gs to activate live Sheet syncing
+  googleSheetWebhookUrl: "https://script.google.com/macros/s/AKfycbw4iW5j-gayInn0eVjBHvsE7BlGZKet51kYTRkg3sKXAs-cmjNZFEJVs-b5AAQxN_g0Fg/exec",
   pricing: {
     bhk1_masked: "FROM ₹ 37 LAKH*",
     bhk1_actual: "₹ 37 Lakhs* All-Inclusive",
